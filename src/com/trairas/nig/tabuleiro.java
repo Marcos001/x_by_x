@@ -89,9 +89,13 @@ public class tabuleiro extends JPanel implements ActionListener{
         for (int i=0;i<_TAM;i++){
             if(e.getSource() == botoes[i]){
                 print("Clicado no botão "+i );
+
+                //buscar na matrix se pode ser inserida, e colorir as casas de ataque
+
+                //posicao na matriz e alteramento na GUI
                 v = mat.traduz_para_matrix(i);
-                print("v[0] = "+v[0]+" v[1] = "+v[1]);
                 botoes[i].setIcon(ic_red);
+
             }
         }
 
