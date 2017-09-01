@@ -34,6 +34,24 @@ public class tabuleiro extends JPanel implements ActionListener{
           botoes[i].addActionListener(this);
           this.add(botoes[i]);
       }
+
+      //gambiarra
+      int value = 0;
+        for (int i=0;i<8;i++){
+            for (int j=0;j<8;j++){
+                if(mat.matrix[i][j] == 1){
+                    botoes[value].setBackground(new Color(255,255,255));
+                    print("branco = "+mat.matrix[i][j]);
+                }
+                else {
+                    botoes[value].setBackground(new Color(55,55,55));
+                    print("preto = "+mat.matrix[i][j]);
+                }
+                value += 1;
+            }
+        }
+
+
     }
 
 

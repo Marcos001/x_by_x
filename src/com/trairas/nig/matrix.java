@@ -5,7 +5,7 @@ package com.trairas.nig;
  */
 public class matrix {
 
-    private int matrix[][];
+    public int matrix[][];
     private int _size;
 
 
@@ -13,6 +13,12 @@ public class matrix {
         boolean _state = false;
         matrix = new int[_size][_size];
         for (int i=0;i<_size;i++){
+            if (_state){
+                _state = false;
+            }
+            else{
+                _state = true;
+            }
             for (int j=0;j<_size;j++){
                 if (_state){
                     matrix[i][j] = 1;
@@ -26,6 +32,7 @@ public class matrix {
         }
     }
 
+
     public void ver_matrix(){
         for (int i=0;i<_size;i++){
             print("\n");
@@ -35,6 +42,15 @@ public class matrix {
         }
 
     }
+
+    public void traduz_para_vetor(int i, int j){
+
+    }
+
+    public void traduz_para_matrix(int i){
+
+    }
+
 
     public matrix(int size){
         this._size = size;
