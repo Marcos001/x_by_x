@@ -16,6 +16,7 @@ public class tabuleiro extends JPanel implements ActionListener{
 
     ImageIcon ic_blue = new ImageIcon(getClass().getResource("asserts/r_blue.png"));
     ImageIcon ic_red = new ImageIcon(getClass().getResource("asserts/r_red.png"));
+    ImageIcon ic_x = new ImageIcon(getClass().getResource("asserts/x_.png"));
 
     private void init_buttons(int rainhas){
         botoes = new JButton[rainhas];
@@ -38,7 +39,7 @@ public class tabuleiro extends JPanel implements ActionListener{
           this.add(botoes[i]);
       }
 
-      //gambiarra
+      //gambiarra para setar as cores de fundo dos botoes
       int value = 0;
         for (int i=0;i<8;i++){
             for (int j=0;j<8;j++){
@@ -89,16 +90,41 @@ public class tabuleiro extends JPanel implements ActionListener{
         for (int i=0;i<_TAM;i++){
             if(e.getSource() == botoes[i]){
                 print("Clicado no botão "+i );
-
                 //buscar na matrix se pode ser inserida, e colorir as casas de ataque
-
                 //posicao na matriz e alteramento na GUI
-                v = mat.traduz_para_matrix(i);
-                botoes[i].setIcon(ic_red);
-
+                mat.traduz_para_matrix(i);
+                //botoes[i].setIcon(ic_red);
             }
         }
+        print("Atualizado tabuleiro");
+      update_tabuleiro();
+      mat.ver_matrix();
+    }
 
+    // vai ser depracaciada
+    public void update_tabuleiro(){
+        int value = 0;
+        for (int i=0;i<8;i++){
+            for (int j=0;j<8;j++){
+                if(mat.matrix[i][j] == 1){
+                    botoes[value].setBackground(new Color(255,255,255));
+                    print("branco = "+mat.matrix[i][j]);
+                }
+                else if(mat.matrix[i][j] == 1){
+                    botoes[value].setBackground(new Color(55,55,55));
+                    print("preto = "+mat.matrix[i][j]);
+                }
+                else if(mat.matrix[i][j] == 3){
+                    botoes[value].setIcon(ic_red);
+                    print("rainha = "+mat.matrix[i][j]);
+                }
+                else if(mat.matrix[i][j] == 4){
+                    botoes[value].setIcon(ic_x);
+                    print("casa atacada = "+mat.matrix[i][j]);
+                }
+                value += 1;
+            }
+        }
     }
 
     private void print(String M){

@@ -7,7 +7,8 @@ public class matrix {
 
     public int matrix[][];
     private int _size;
-    private final int _rainha = 3;
+    private static final int _rainha = 3;
+    private static final int _X = 4;
 
     public void inicializar_matrix(){
         boolean _state = false;
@@ -47,51 +48,64 @@ public class matrix {
         //tem que achar i do vetor
     }
 
-    private boolean verifica_horizontal(int i, int j){
+    private void x_ataque(int i, int j){
 
-        while ( i >= 0 || i <= _size ) {
-            while ( j >= 0 || j <= _size ) {
-                if(matrix[i][j] == _rainha){
-                    //
-                    return false;
+    }
+
+    private boolean verifica_horizontal(int ii, int jj){
+
+        //H1 ++
+        print("H1");
+            for (int j=(jj+1);j<_size;j++){
+                print("casa["+ii+"]["+j+"] = "+matrix[ii][j]);
+                if(matrix[ii][j] == _rainha){ // || _X
+                    print("Rainha encontrada ["+ii+"]["+j+"]");
+                    return true;
                 }
             }
 
+        //H2 --
+        print("H2");
+        for (int j=(jj-1);j>=0;j--){
+            print("casa["+ii+"]["+j+"] = "+matrix[ii][j]);
+            if(matrix[ii][j] == _rainha){
+                print("Rainha encontrada ["+ii+"]["+j+"]");
+                return true;
+            }
         }
 
-        return true;
+        return false;
     }
 
-    public int[] traduz_para_matrix(int index){
+    public void traduz_para_matrix(int index){
         //tem que achar i e j da matrix
         int value=0;
-        int v[] = new int[2];
+
         print("Procurando a coordenada da posição i = "+index);
 
         //procurando a coluna - [entra o problema de busca] - ja incrementaria i e j pra
         // que ficasse proximo de value
         for (int i=0;i<_size;i++){
             for (int j =0;j<_size;j++){
-              if (index == value){
 
+              if (index == value){
                   //encontrou i & j
                   if(matrix[i][j] == 0 || matrix[i][j] == 1 ){
-                      //posicao valida
-                      if(){
-                          //se sofre ameaça ou ataca
+                      if(!verifica_horizontal(i,j)){
+                          print("---- Não encontrado Rinhas --  INSERT ");
+                          matrix[i][j] = _rainha;
+                          //inserir x nas casas em ataque
                       }
+                    return;
                   }
 
-                  v[0] = i;v[1] = j;
-                  //print("linha = "+v[0]+" coluna = "+v[1]);
-                  return v;
               }
               else{
                   value +=1;
               }
             }
         }
-        return null;
+
     }
 
 
