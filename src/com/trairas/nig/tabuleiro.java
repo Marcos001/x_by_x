@@ -14,6 +14,9 @@ public class tabuleiro extends JPanel implements ActionListener{
     private int _TAM;
     matrix mat;
 
+    ImageIcon ic_blue = new ImageIcon(getClass().getResource("asserts/r_blue.png"));
+    ImageIcon ic_red = new ImageIcon(getClass().getResource("asserts/r_red.png"));
+
     private void init_buttons(int rainhas){
         botoes = new JButton[rainhas];
     }
@@ -88,6 +91,7 @@ public class tabuleiro extends JPanel implements ActionListener{
                 print("Clicado no botão "+i );
                 v = mat.traduz_para_matrix(i);
                 print("v[0] = "+v[0]+" v[1] = "+v[1]);
+                botoes[i].setIcon(ic_red);
             }
         }
 
