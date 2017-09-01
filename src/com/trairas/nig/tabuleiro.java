@@ -12,6 +12,7 @@ public class tabuleiro extends JPanel implements ActionListener{
 
     private JButton botoes[];
     private int _TAM;
+    matrix mat;
 
     private void init_buttons(int rainhas){
         botoes = new JButton[rainhas];
@@ -21,7 +22,14 @@ public class tabuleiro extends JPanel implements ActionListener{
 
       for(int i=0;i< TAM; i++){
           botoes[i] = new JButton();
-          botoes[i].setBackground(new Color(193,70,234));
+
+          if(i % 2 == 0){
+              botoes[i].setBackground(new Color(255,255,255));
+          }
+            else{
+              botoes[i].setBackground(new Color(55,55,55));
+          }
+
           botoes[i].setSize(20,20);
           botoes[i].addActionListener(this);
           this.add(botoes[i]);
@@ -39,7 +47,14 @@ public class tabuleiro extends JPanel implements ActionListener{
         this.setVisible(true);
         this.setSize(400,400);
 
+
+        //iniciando parte logica da matrix
+        print("iniciando parte logica...");
+        mat = new matrix(8);
+
+
         //adicionando botoes
+        print("\nAdicionando os botoes...");
         init_buttons(TAM);
         add_buutons(TAM);
 
