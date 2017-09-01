@@ -81,9 +81,13 @@ public class tabuleiro extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        int v[] = new int[2];
+
         for (int i=0;i<_TAM;i++){
             if(e.getSource() == botoes[i]){
                 print("Clicado no botão "+i );
+                v = mat.traduz_para_matrix(i);
+                print("v[0] = "+v[0]+" v[1] = "+v[1]);
             }
         }
 

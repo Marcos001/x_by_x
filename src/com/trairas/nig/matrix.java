@@ -44,11 +44,28 @@ public class matrix {
     }
 
     public void traduz_para_vetor(int i, int j){
-
+        //tem que achar i do vetor
     }
 
-    public void traduz_para_matrix(int i){
-
+    public int[] traduz_para_matrix(int index){
+        //tem que achar i e j da matrix
+        int value=0;
+        int v[] = new int[2];
+        print("Procurando a coordenada da posição i = "+index);
+        //procurando a coluna
+        for (int i=0;i<_size;i++){
+            for (int j =0;j<_size;j++){
+              if (index == value){
+                  v[0] = i;v[1] = j;
+                  //print("linha = "+v[0]+" coluna = "+v[1]);
+                  return v;
+              }
+              else{
+                  value +=1;
+              }
+            }
+        }
+        return null;
     }
 
 
