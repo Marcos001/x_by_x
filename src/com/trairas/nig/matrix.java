@@ -106,10 +106,12 @@ public class matrix {
 
     //diagonais
     private boolean D1(int ii, int jj){
-
-        for (int i=(ii+1);i>=0;i++){
-            for (int j=(jj+1);j < _size ;j++){
-
+        int i = ii;
+        int j = jj;
+        while(j < _size && i <_size ){
+            i += 1;
+            j += 1;
+            if(i < _size && j <_size){
                 if(matrix[i][j] == _rainha){
                     return true;
                 }
@@ -118,8 +120,8 @@ public class matrix {
                     matrix[i][j] = _X;
                 }
             }
-
         }
+
         return false;
     }
 
@@ -137,6 +139,8 @@ public class matrix {
         if (V2(ii,jj))
             return true;
 
+        if(D1(ii,jj))
+            return true;
 
         return false;
     }
