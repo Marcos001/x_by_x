@@ -1,5 +1,7 @@
 package com.trairas.nig;
 
+import javax.swing.*;
+
 /**
  * Created by nig on 01/09/17.
  */
@@ -35,14 +37,35 @@ public class matrix {
 
 
     public void ver_matrix(){
+        boolean end = false;
+        int t_rainhas = 0;
+        String resultado = "";
         print("---------------------");
         for (int i=0;i<_size;i++){
             print("\n");
             for (int j=0;j<_size;j++){
                 System.out.printf(" %d ",matrix[i][j]);
+                if(!end){
+                    if(matrix[i][j] == 0 || matrix[i][j] == 1){
+                        end = true;
+                    }
+                }
+                if(matrix[i][j] == _rainha){
+                    t_rainhas += 1;
+                }
+
             }
         }
 
+        if (!end){
+            if(t_rainhas == 8){
+                resultado = "Satus : Vitoria! \n";
+            }
+            else{
+                resultado = "Satus : Verme Inútil - Falha \n";
+            }
+            JOptionPane.showMessageDialog(null,"Tabuleiro Prenchido \n "+resultado+" Rainhas = "+t_rainhas);
+        }
     }
 
     private boolean H1(int ii, int jj){
@@ -125,6 +148,66 @@ public class matrix {
         return false;
     }
 
+    private boolean D2(int ii, int jj){
+        int i = ii;
+        int j = jj;
+        while(j < _size && i >= 0 ){
+            i -= 1;
+            j += 1;
+            if(i >= 0 && j <_size){
+                if(matrix[i][j] == _rainha){
+                    return true;
+                }
+
+                if(matrix[i][j] == 0 || matrix[i][j] == 1){
+                    matrix[i][j] = _X;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean D3(int ii, int jj){
+        int i = ii;
+        int j = jj;
+        while(j >= 0 && i >= 0 ){
+            i -= 1;
+            j -= 1;
+            if(i >= 0 && j >= 0){
+                if(matrix[i][j] == _rainha){
+                    return true;
+                }
+
+                if(matrix[i][j] == 0 || matrix[i][j] == 1){
+                    matrix[i][j] = _X;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean D4(int ii, int jj){
+        int i = ii;
+        int j = jj;
+        while(j >= 0 && i <_size ){
+            i += 1;
+            j -= 1;
+            if(i <_size && j >= 0){
+                if(matrix[i][j] == _rainha){
+                    return true;
+                }
+
+                if(matrix[i][j] == 0 || matrix[i][j] == 1){
+                    matrix[i][j] = _X;
+                }
+            }
+        }
+
+        return false;
+    }
+
     private boolean verifica_posicoes(int ii, int jj){
 
         if (H1(ii,jj))
@@ -142,9 +225,21 @@ public class matrix {
         if(D1(ii,jj))
             return true;
 
+        if(D2(ii,jj))
+            return true;
+
+        if(D3(ii,jj))
+            return true;
+
+        if(D4(ii,jj))
+            return true;
+
         return false;
     }
 
+    private void verifica_fim(){
+
+    }
 
 
     public void traduz_para_matrix(int index){
