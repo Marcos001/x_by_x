@@ -35,6 +35,7 @@ public class matrix {
 
 
     public void ver_matrix(){
+        print("---------------------");
         for (int i=0;i<_size;i++){
             print("\n");
             for (int j=0;j<_size;j++){
@@ -44,57 +45,120 @@ public class matrix {
 
     }
 
-    public void traduz_para_vetor(int i, int j){
-        //tem que achar i do vetor
-    }
-
-    private void x_ataque(int i, int j){
-
-    }
-
-    private boolean verifica_horizontal(int ii, int jj){
-
-        //H1 ++
+    private boolean H1(int ii, int jj){
         print("H1");
-            for (int j=(jj+1);j<_size;j++){
-                print("casa["+ii+"]["+j+"] = "+matrix[ii][j]);
-                if(matrix[ii][j] == _rainha){ // || _X
-                    print("Rainha encontrada ["+ii+"]["+j+"]");
+        for (int j=(jj+1);j < _size ;j++){
+            if(matrix[ii][j] == _rainha){ // || _X
+                return true;
+            }
+
+            if(matrix[ii][j] == 0 || matrix[ii][j] == 1){
+                matrix[ii][j] = _X;
+            }
+        }
+        return false;
+    }
+
+    private boolean H2(int ii, int jj){
+        print("H2");
+        for (int j=(jj-1);j>=0;j--){
+
+            if(matrix[ii][j] == _rainha){
+                return true;
+            }
+
+            if(matrix[ii][j] == 0 || matrix[ii][j] == 1){
+                matrix[ii][j] = _X;
+            }
+        }
+        return false;
+    }
+
+    private boolean V1(int ii, int jj){
+        print("V1");
+        for (int i=(ii+1);i < _size ;i++){
+
+            if(matrix[i][jj] == _rainha){ // || _X
+                return true;
+            }
+
+            if(matrix[i][jj] == 0 || matrix[i][jj] == 1){
+                matrix[i][jj] = _X;
+            }
+        }
+        return false;
+    }
+
+    private boolean V2(int ii, int jj){
+        print("H2");
+        for (int i=(ii-1);i>=0;i--){
+
+            if(matrix[i][jj] == _rainha){
+                return true;
+            }
+
+            if(matrix[i][jj] == 0 || matrix[i][jj] == 1){
+                matrix[i][jj] = _X;
+            }
+        }
+        return false;
+    }
+
+    //diagonais
+    private boolean D1(int ii, int jj){
+
+        for (int i=(ii+1);i>=0;i++){
+            for (int j=(jj+1);j < _size ;j++){
+
+                if(matrix[i][j] == _rainha){
                     return true;
+                }
+
+                if(matrix[i][j] == 0 || matrix[i][j] == 1){
+                    matrix[i][j] = _X;
                 }
             }
 
-        //H2 --
-        print("H2");
-        for (int j=(jj-1);j>=0;j--){
-            print("casa["+ii+"]["+j+"] = "+matrix[ii][j]);
-            if(matrix[ii][j] == _rainha){
-                print("Rainha encontrada ["+ii+"]["+j+"]");
-                return true;
-            }
         }
+        return false;
+    }
+
+    private boolean verifica_posicoes(int ii, int jj){
+
+        if (H1(ii,jj))
+           return true;
+
+        if (H2(ii,jj))
+            return true;
+
+        if (V1(ii,jj))
+            return true;
+
+        if (V2(ii,jj))
+            return true;
+
 
         return false;
     }
 
+
+
     public void traduz_para_matrix(int index){
-        //tem que achar i e j da matrix
+
         int value=0;
 
-        print("Procurando a coordenada da posição i = "+index);
-
-        //procurando a coluna - [entra o problema de busca] - ja incrementaria i e j pra
-        // que ficasse proximo de value
         for (int i=0;i<_size;i++){
             for (int j =0;j<_size;j++){
 
               if (index == value){
-                  //encontrou i & j
+
+                  if(matrix[i][j] == _rainha || matrix[i][j] == _X){
+                      return;
+                  }
+
                   if(matrix[i][j] == 0 || matrix[i][j] == 1 ){
-                      if(!verifica_horizontal(i,j)){
-                          print("---- Não encontrado Rinhas --  INSERT ");
+                      if(!verifica_posicoes(i,j)){
                           matrix[i][j] = _rainha;
-                          //inserir x nas casas em ataque
                       }
                     return;
                   }

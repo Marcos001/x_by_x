@@ -45,11 +45,10 @@ public class tabuleiro extends JPanel implements ActionListener{
             for (int j=0;j<8;j++){
                 if(mat.matrix[i][j] == 1){
                     botoes[value].setBackground(new Color(255,255,255));
-                    print("branco = "+mat.matrix[i][j]);
                 }
                 else {
                     botoes[value].setBackground(new Color(55,55,55));
-                    print("preto = "+mat.matrix[i][j]);
+                    //print("preto = "+mat.matrix[i][j]);
                 }
                 value += 1;
             }
@@ -85,20 +84,13 @@ public class tabuleiro extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        int v[] = new int[2];
-
         for (int i=0;i<_TAM;i++){
             if(e.getSource() == botoes[i]){
-                print("Clicado no botão "+i );
-                //buscar na matrix se pode ser inserida, e colorir as casas de ataque
-                //posicao na matriz e alteramento na GUI
                 mat.traduz_para_matrix(i);
-                //botoes[i].setIcon(ic_red);
             }
         }
-        print("Atualizado tabuleiro");
-      update_tabuleiro();
-      mat.ver_matrix();
+        update_tabuleiro();
+        mat.ver_matrix();
     }
 
     // vai ser depracaciada
@@ -108,19 +100,15 @@ public class tabuleiro extends JPanel implements ActionListener{
             for (int j=0;j<8;j++){
                 if(mat.matrix[i][j] == 1){
                     botoes[value].setBackground(new Color(255,255,255));
-                    print("branco = "+mat.matrix[i][j]);
                 }
                 else if(mat.matrix[i][j] == 1){
                     botoes[value].setBackground(new Color(55,55,55));
-                    print("preto = "+mat.matrix[i][j]);
                 }
                 else if(mat.matrix[i][j] == 3){
                     botoes[value].setIcon(ic_red);
-                    print("rainha = "+mat.matrix[i][j]);
                 }
                 else if(mat.matrix[i][j] == 4){
                     botoes[value].setIcon(ic_x);
-                    print("casa atacada = "+mat.matrix[i][j]);
                 }
                 value += 1;
             }
