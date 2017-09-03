@@ -111,13 +111,9 @@ public class tabuleiro extends JPanel implements ActionListener{
     }
 
     public void reiniciar(){
-         mat.ver_matrix();
-         print("--> iniciando matrix <-- \n");
          mat.inicializar_matrix();
-         mat.ver_matrix();
-         print("--> Atualizando tabuleiro <--\n");
          update_tabuleiro();
-         mat.ver_matrix();
+
     }
 
     private void print(String M){

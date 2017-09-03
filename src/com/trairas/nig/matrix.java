@@ -266,13 +266,6 @@ public class matrix {
         ver_matrix();
     }
 
-    public void zera_matrix(){
-        for (int i=0;i<_size;i++){
-            for (int j=0;j<_size;j++){
-                matrix[i][j] = -1;
-            }
-        }
-    }
 
     void print(String m){
         System.out.println(m);
