@@ -35,7 +35,6 @@ public class matrix {
         }
     }
 
-
     public void ver_matrix(){
         boolean end = false;
         int t_rainhas = 0;
@@ -127,7 +126,6 @@ public class matrix {
         return false;
     }
 
-    //diagonais
     private boolean D1(int ii, int jj){
         int i = ii;
         int j = jj;
@@ -237,15 +235,8 @@ public class matrix {
         return false;
     }
 
-    private void verifica_fim(){
-
-    }
-
-
     public void traduz_para_matrix(int index){
-
         int value=0;
-
         for (int i=0;i<_size;i++){
             for (int j =0;j<_size;j++){
 
@@ -261,21 +252,26 @@ public class matrix {
                       }
                     return;
                   }
-
               }
               else{
                   value +=1;
               }
             }
         }
-
     }
-
 
     public matrix(int size){
         this._size = size;
         inicializar_matrix();
         ver_matrix();
+    }
+
+    public void zera_matrix(){
+        for (int i=0;i<_size;i++){
+            for (int j=0;j<_size;j++){
+                matrix[i][j] = -1;
+            }
+        }
     }
 
     void print(String m){
