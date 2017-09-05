@@ -12,16 +12,16 @@ public class matrix {
     private static final int _rainha = 3;
     private static final int _X = 4;
 
-    public void inicializar_matrix(){
+    private void insert_par(){
         boolean _state = false;
         matrix = new int[_size][_size];
         for (int i=0;i<_size;i++){
-            if (_state){
-                _state = false;
-            }
+
+            if (_state) {
+                _state = false; }
             else{
-                _state = true;
-            }
+                _state = true;}
+
             for (int j=0;j<_size;j++){
                 if (_state){
                     matrix[i][j] = 1;
@@ -33,6 +33,31 @@ public class matrix {
                 }
             }
         }
+    }
+
+    private void insert_impar(){
+        boolean _state = false;
+        matrix = new int[_size][_size];
+        for (int i=0;i<_size;i++){
+            for (int j=0;j<_size;j++){
+                if (_state){
+                    matrix[i][j] = 1;
+                    _state = false;
+                }
+                else{
+                    matrix[i][j] = 0;
+                    _state = true;
+                }
+            }
+        }
+    }
+
+    //serve para numero par
+    public void inicializar_matrix(){
+        if(_size % 2 == 0)
+            insert_par();
+        else
+            insert_impar();
     }
 
     public void ver_matrix(){
@@ -57,7 +82,7 @@ public class matrix {
         }
 
         if (!end){
-            if(t_rainhas == 8){
+            if(t_rainhas == _size){
                 resultado = "Satus : Vitoria! \n";
             }
             else{

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by nig on 01/09/17.
  */
+
 public class tabuleiro extends JPanel implements ActionListener{
 
     private JButton botoes[];
@@ -18,9 +19,32 @@ public class tabuleiro extends JPanel implements ActionListener{
     private static final int _WIDTH = 500;
     private static final int _HEIGTH = 500;
 
-    ImageIcon ic_blue = new ImageIcon(getClass().getResource("asserts/r_blue.png"));
-    ImageIcon ic_red = new ImageIcon(getClass().getResource("asserts/r_red.png"));
-    ImageIcon ic_x = new ImageIcon(getClass().getResource("asserts/x_.png"));
+    //tema 1 - BLUE - rainha azul e casas vermelhas
+    //tema 1 - RED - rainha vermelho e casas verdes
+
+    ImageIcon tema_1_personagem = new ImageIcon(getClass().getResource("asserts/r_blue.png"));
+    ImageIcon tema_2_personagem = new ImageIcon(getClass().getResource("asserts/r_red.png"));
+
+    ImageIcon tema_1_icone = new ImageIcon(getClass().getResource("asserts/x_red.png"));
+    ImageIcon tema_2_icone = new ImageIcon(getClass().getResource("asserts/x_.png"));
+
+
+    public static int getTema1() {
+        return TEMA_1;
+    }
+
+    public static int getTema2() {
+        return TEMA_2;
+    }
+
+    private static final int TEMA_1 = 1;
+    private static final int TEMA_2 = 2;
+
+    public void setTema(int tema) {
+        this.tema = tema;
+    }
+
+    private int tema = 1;
 
     private void init_buttons(int rainhas){
         botoes = new JButton[rainhas];
@@ -54,7 +78,7 @@ public class tabuleiro extends JPanel implements ActionListener{
         this._size = rainhas;
         this._TAM = TAM;
 
-        this.setLayout(new GridLayout(rainhas, rainhas));
+        this.setLayout(new GridLayout(this._size, this._size));
         this.setBackground(new Color(255,255,255));
         this.setVisible(true);
         this.setSize(_WIDTH,_HEIGTH);
@@ -63,7 +87,7 @@ public class tabuleiro extends JPanel implements ActionListener{
         //iniciando parte logica da matrix
         print("iniciando parte logica...");
         if(mat == null){
-            mat = new matrix(8);
+            mat = new matrix(_size);
         }
 
 
@@ -100,21 +124,27 @@ public class tabuleiro extends JPanel implements ActionListener{
                     botoes[value].setBackground(new Color(255,255,255));
                 }
                 else if(mat.matrix[i][j] == 3){
-                    botoes[value].setIcon(ic_red);
+                    if(tema == TEMA_1){
+                        botoes[value].setIcon(tema_1_personagem);
+                    }
+                    else{
+                        botoes[value].setIcon(tema_2_personagem);
+                    }
                 }
                 else if(mat.matrix[i][j] == 4){
-                    botoes[value].setIcon(ic_x);
+                    if(tema == TEMA_1){
+                        botoes[value].setIcon(tema_1_icone);
+                    }
+                    else{
+                        botoes[value].setIcon(tema_2_icone);
+                    }
+
                 }
                 value += 1;
             }
         }
     }
 
-    public void reiniciar(){
-         mat.inicializar_matrix();
-         update_tabuleiro();
-
-    }
 
     private void print(String M){
         System.out.println(M);
