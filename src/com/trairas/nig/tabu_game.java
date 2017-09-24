@@ -147,6 +147,8 @@ public class tabu_game extends JPanel implements ActionListener{
                      botoes[value].setIcon(u.tratar_icone(p.ic_rei_black, tam_x, tam_y));
                  }
 
+                 //casas e pecas sobre ataque
+
 
 
 

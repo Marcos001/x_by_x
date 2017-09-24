@@ -319,4 +319,10 @@ public class matrix_game {
 
     }
 
+    //actions of pices
+
+    private void mov_peao(){
+        //peao branco
+    }
+
 }
