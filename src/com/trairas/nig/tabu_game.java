@@ -1,5 +1,6 @@
 package com.trairas.nig;
 
+import com.trairas.nig.net.cliente;
 import com.trairas.nig.net.servidor;
 
 import javax.swing.*;
@@ -20,7 +21,9 @@ public class tabu_game extends JPanel implements ActionListener{
     private int comeco = 0;
 
     public matrix_game mat;
-    servidor ser = new servidor();
+    servidor ser;
+    private cliente cli;
+
 
     private int vez_brancas = 1;
     private int vez_pretas = -1;
@@ -94,11 +97,14 @@ public class tabu_game extends JPanel implements ActionListener{
         if (conexao == op_servidor){
             ser = new servidor();
             info_connection.setText("Game Servidor ");
+            ser.start();
         }else{
             info_connection.setText("Game Cliente ");
+            cli = new cliente("10.0.0.108");
+            cli.start();
         }
 
-        ser.start();
+
     }
 
     private void init_buttons(int rainhas){

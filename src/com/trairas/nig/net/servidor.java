@@ -41,11 +41,10 @@ public class servidor extends Thread{
 
     public servidor(){
 
-
     }
 
     public servidor(Socket s){//recebe o valor do socket enviado na thread
-        conexao = s;
+        this.conexao = s;
     }
 
     private void sendData(String message){
@@ -67,6 +66,13 @@ public class servidor extends Thread{
         try{
 
             u.print("metodo run");
+
+            if (conexao == null){
+                System.out.println("conexao nula");
+            }
+            if (output == null){
+                System.out.println("output nula");
+            }
 
             //configura o fluxo de saida de dados
             output = new ObjectOutputStream(conexao.getOutputStream());

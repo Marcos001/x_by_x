@@ -11,7 +11,7 @@ import java.net.Socket;
 /**
  * Created by nig on 23/09/17.
  */
-public class cliente {
+public class cliente extends Thread implements Runnable {
 
 
     private ObjectOutputStream output; //gera o fluxo de saida para o servidor
@@ -25,7 +25,7 @@ public class cliente {
     }
 
 
-    public void runCliente(){
+    public void run(){
 
         try{//config o servidor para receber conexões; processa as conexoes
 

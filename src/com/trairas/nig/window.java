@@ -95,7 +95,7 @@ public class window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Iniciando Servidor");
-                play_game_network();
+                play_game_network(servidor);
             }
         });
 
@@ -103,6 +103,7 @@ public class window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Conentando a Servidor");
+                play_game_network(cliente);
             }
         });
 
@@ -135,19 +136,19 @@ public class window extends JFrame {
         this.setSize(contentPane.getWidth(), contentPane.getHeight());
     }
 
-    private void play_game_network(){
+
+    private void play_game_network(int conexao){
 
         remove_painel_anterior();
 
         contentPane.setBackground(new Color(55,55,55));
         _tg = null;
-        _tg = new tabu_game(DEFAULT_DIMENSION, servidor);
+        _tg = new tabu_game(DEFAULT_DIMENSION, conexao);
         contentPane.add(_tg);
         contentPane.updateUI();
         contentPane.setSize(_tg.getWidth(), _tg.getHeight());
         this.setSize(contentPane.getWidth(), contentPane.getHeight());
 
     }
-
 
 }
