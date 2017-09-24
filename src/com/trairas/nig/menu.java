@@ -7,25 +7,37 @@ import java.awt.*;
 /**
  * Created by nig on 03/09/17.
  */
+
 public class menu {
 
     Font f = new Font("Times New Roman", Font.BOLD, 14);
 
     private JMenuBar BarraMenu = null;
+
     private JMenu mnuArquivo = null;
     private JMenu menu_search_solution = null;
     private JMenu menu_conf = null;
+    private JMenu game_network = null;
 
     private JMenuItem menu_reiniciar = null;
-    private JMenuItem mnuSair = null;
     private JMenuItem qtd_casa = null;
+    private JMenuItem mnuSair = null;
 
     private JMenuItem menu_algoritmo = null;
-
 
     private JMenuItem tema_1 = null;
     private JMenuItem tema_2 = null;
 
+    public JMenuItem getInit_server() {
+        return init_server;
+    }
+
+    public JMenuItem getSearch_server() {
+        return search_server;
+    }
+
+    private JMenuItem init_server = null;
+    private JMenuItem search_server = null;
 
 
     //
@@ -36,6 +48,7 @@ public class menu {
             BarraMenu.add(getMnuArquivo());
             BarraMenu.add(get_menu_search_soluction());
             BarraMenu.add(getMnuConfig());
+            BarraMenu.add(getMnuGameNetwork());
         }
         return BarraMenu;
     }
@@ -76,6 +89,18 @@ public class menu {
             menu_conf.add(get_tema_2());
         }
         return menu_conf;
+    }
+
+    private JMenu getMnuGameNetwork() {
+        if (game_network == null){
+            game_network = new JMenu();
+            game_network.setText("Network");
+            game_network.setFont(f);
+            game_network.setForeground(new Color(255,255,255));
+            game_network.add(get_init_server());
+            game_network.add(get_search_server());
+        }
+        return game_network;
     }
 
     //
@@ -148,7 +173,30 @@ public class menu {
         return menu_algoritmo;
     }
 
-    // get()s
+    private JMenuItem get_init_server() {
+        if (init_server == null){
+            init_server = new JMenuItem();
+            init_server.setBackground(new Color(55,55,55));
+            init_server.setForeground(new Color(255,255,255));
+            init_server.setText("Iniciar Game Servidor ");
+            init_server.setFont(f);
+        }
+        return init_server;
+    }
+
+    private JMenuItem get_search_server() {
+        if (search_server == null){
+            search_server = new JMenuItem();
+            search_server.setBackground(new Color(55,55,55));
+            search_server.setForeground(new Color(255,255,255));
+            search_server.setText(" Conectar a Game Servidor ");
+            search_server.setFont(f);
+        }
+        return search_server;
+    }
+
+
+    // gets()
 
     public JMenuItem getItemSair(){
         return mnuSair;

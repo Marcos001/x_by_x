@@ -1,18 +1,23 @@
 package com.trairas.nig;
 
+import jdk.nashorn.internal.scripts.JO;
+
 import javax.swing.*;
 
 /**
- * Created by nig on 01/09/17.
+ * Created by nig on 23/09/17.
  */
-public class matrix {
+public class matrix_game {
 
     public int matrix[][];
     private int _size;
     private static final int _rainha = 3;
     private static final int _X = 4;
+    pecas p = new pecas();
 
-    private void insert_par(){
+
+    //serve para numero par
+    public void inicializar_matrix(){
         boolean _state = false;
         matrix = new int[_size][_size];
         for (int i=0;i<_size;i++){
@@ -33,31 +38,6 @@ public class matrix {
                 }
             }
         }
-    }
-
-    private void insert_impar(){
-        boolean _state = false;
-        matrix = new int[_size][_size];
-        for (int i=0;i<_size;i++){
-            for (int j=0;j<_size;j++){
-                if (_state){
-                    matrix[i][j] = 1;
-                    _state = false;
-                }
-                else{
-                    matrix[i][j] = 0;
-                    _state = true;
-                }
-            }
-        }
-    }
-
-    //serve para numero par
-    public void inicializar_matrix(){
-        if(_size % 2 == 0)
-            insert_par();
-        else
-            insert_impar();
     }
 
     public void ver_matrix(){
@@ -234,7 +214,7 @@ public class matrix {
     private boolean verifica_posicoes(int ii, int jj){
 
         if (H1(ii,jj))
-           return true;
+            return true;
 
         if (H2(ii,jj))
             return true;
@@ -265,37 +245,78 @@ public class matrix {
         for (int i=0;i<_size;i++){
             for (int j =0;j<_size;j++){
 
-              if (index == value){
+                if (index == value){
 
-                  if(matrix[i][j] == _rainha || matrix[i][j] == _X){
-                      return;
-                  }
+                    if(matrix[i][j] == _rainha || matrix[i][j] == _X){
+                        return;
+                    }
 
-                  if(matrix[i][j] == 0 || matrix[i][j] == 1 ){
-                      if(!verifica_posicoes(i,j)){
-                          matrix[i][j] = _rainha;
-                      }
-                    return;
-                  }
-              }
-              else{
-                  value +=1;
-              }
+                    if(matrix[i][j] == 0 || matrix[i][j] == 1 ){
+                        if(!verifica_posicoes(i,j)){
+                            matrix[i][j] = _rainha;
+                        }
+                        return;
+                    }
+                }
+                else{
+                    value +=1;
+                }
             }
         }
     }
 
-    public matrix(int size){
+    public matrix_game(int size){
         this._size = size;
         inicializar_matrix();
         ver_matrix();
     }
 
+    private void setar_pecas_brancas(){
+        matrix[0][0] = p.torre_white;
+        matrix[0][1] = p.cavalo_white;
+        matrix[0][2] = p.bispo_white;
+        matrix[0][3] = p.rei_white;
+
+        matrix[0][4] = p.rainha_white;
+        matrix[0][5] = p.bispo_white;
+        matrix[0][6] = p.cavalo_white;
+        matrix[0][7] = p.torre_white;
+    }
+
+    private void setar_pecas_pretas(){
+        matrix[7][0] = p.torre_black;
+        matrix[7][1] = p.cavalo_black;
+        matrix[7][2] = p.bispo_black;
+        matrix[7][3] = p.rei_black;
+
+        matrix[7][4] = p.rainha_black;
+        matrix[7][5] = p.bispo_black;
+        matrix[7][6] = p.cavalo_black;
+        matrix[7][7] = p.torre_black;
+    }
+
+    public void setar_peoes(){
+        for (int j=0;j<_size;j++){
+            //setando os peoes brancos
+            matrix[1][j] = p.peao_white;
+            //setando os peoes pretos
+            matrix[6][j] = p.peao_black;
+        }
+    }
+
+
     void print(String m){
         System.out.println(m);
     }
 
+    public void set_pecas_xadrez(){
+        setar_peoes();
+        setar_pecas_brancas();
+        setar_pecas_pretas();
+    }
 
+    public matrix_game(){
 
+    }
 
 }

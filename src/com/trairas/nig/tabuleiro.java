@@ -66,9 +66,7 @@ public class tabuleiro extends JPanel implements ActionListener{
           botoes[i].addActionListener(this);
           this.add(botoes[i]);
       }
-
       update_tabuleiro();
-
     }
 
 

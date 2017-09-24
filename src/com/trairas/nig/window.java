@@ -11,15 +11,21 @@ import java.awt.event.ActionListener;
 public class window extends JFrame {
 
     tabuleiro _t;
+    tabu_game _tg;
     JPanel contentPane;
     menu _menu;
     int DIMENSION = 8;
-    private static final String _TITLE = "n-Rainhas";
+    private static final int DEFAULT_DIMENSION = 8;
+    private static final String _TITLE = "N-Rainhas";
+    mv_util util;
+
+
 
     public window(){
 
         _menu = new menu();
         _t = new tabuleiro(DIMENSION);
+        util = new mv_util();
 
         contentPane = new JPanel();
         contentPane.setLayout(new GridLayout(1,1));
@@ -32,6 +38,7 @@ public class window extends JFrame {
        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
        this.add(contentPane);
        this.setJMenuBar(_menu.getBarraMenu());
+       this.setIconImage(util.get_img_Icon("asserts/data/icone/256.png"));
 
        _menu.getItemReiniciar().addActionListener(new ActionListener() {
            @Override
@@ -81,6 +88,21 @@ public class window extends JFrame {
             }
         });
 
+        _menu.getInit_server().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Iniciando Servidor");
+                play_game_network();
+            }
+        });
+
+        _menu.getSearch_server().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Conentando a Servidor");
+            }
+        });
+
        this.setSize(_t.getWidth(), _t.getHeight());
        this.setVisible(true);
 
@@ -93,6 +115,21 @@ public class window extends JFrame {
         _t = new tabuleiro(DIMENSION);
         contentPane.add(_t);
         contentPane.updateUI();
+    }
+
+    private void play_game_network(){
+        if(_t != null){
+            contentPane.remove(_t);
+        }
+        if (_tg != null){
+            contentPane.remove(_tg);
+        }
+        contentPane.setBackground(new Color(55,55,55));
+        _tg = null;
+        _tg = new tabu_game(DEFAULT_DIMENSION);
+        contentPane.add(_tg);
+        contentPane.updateUI();
+
     }
 
 
