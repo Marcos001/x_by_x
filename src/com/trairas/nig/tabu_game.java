@@ -16,22 +16,52 @@ public class tabu_game extends JPanel implements ActionListener{
     private int _size;
     mv_util u;
     pecas p;
+    private int comeco = 0;
+
+    private int vez_brancas = 1;
+    private int vez_pretas = -1;
+    private int jogada = vez_brancas;
+
 
     private static final int _WIDTH = 500;
     private static final int _HEIGTH = 500;
 
+    JPanel painel_log_server;
+    JPanel painel_game;
+
     public tabu_game(int rainhas){
 
-        u = new mv_util();
-        p = new pecas();
+
         int TAM = (rainhas*rainhas);
         this._size = rainhas;
         this._TAM = TAM;
 
-        this.setLayout(new GridLayout(this._size, this._size));
-        this.setBackground(new Color(255,255,255));
+        u = new mv_util();
+        p = new pecas();
+
+
+        painel_game = new JPanel();
+        painel_game.setLayout(new GridLayout(this._size, this._size));
+        painel_game.setBackground(new Color(255,255,255));
+        painel_game.setBounds(0,0,_WIDTH,_HEIGTH);
+
+
+        painel_log_server = new JPanel();
+        painel_log_server.setBackground(u.branca);
+        painel_log_server.setBounds(_WIDTH+10, 10, 100, 50);
+
+
+        int size_painel_x = (_WIDTH+painel_log_server.getWidth()+20);
+        int size_painel_y = _HEIGTH;
+
+
+        this.add(painel_game);
+        this.add(painel_log_server);
+        this.setLayout(null);
+        this.setBackground(new Color(55,55,55));
         this.setVisible(true);
-        this.setSize(_WIDTH,_HEIGTH);
+        this.setSize(size_painel_x,size_painel_y);
+
 
 
         //iniciando parte logica da matrix
@@ -60,7 +90,7 @@ public class tabu_game extends JPanel implements ActionListener{
             botoes[i] = new JButton();
             botoes[i].setSize(20,20);
             botoes[i].addActionListener(this);
-            this.add(botoes[i]);
+            painel_game.add(botoes[i]);
         }
 
         int value = 0;
@@ -76,14 +106,15 @@ public class tabu_game extends JPanel implements ActionListener{
                 value += 1;
             }
         }
-
     }
 
     // vai ser depracaciada
     public void update_tabuleiro(){
+
         int tam_x = 40;
         int tam_y = 40;
         int value = 0;
+
         for (int i=0;i<_size;i++){
             for (int j=0;j<_size;j++){
 
@@ -149,10 +180,10 @@ public class tabu_game extends JPanel implements ActionListener{
 
                  //casas e pecas sobre ataque
 
-
-
-
-
+                 //casa limpa
+                 else if(mat.matrix[i][j] == p.casa_limpa_at){
+                     botoes[value].setIcon(u.tratar_icone(p.ic_casa_at, tam_x, tam_y));
+                 }
                 value += 1;
             }
         }
@@ -162,9 +193,19 @@ public class tabu_game extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mat.set_pecas_xadrez();
-        update_tabuleiro();
-        mat.ver_matrix();
 
+        if(comeco == 0){
+            mat.set_pecas_xadrez();
+            comeco = 1;
+        }
+        else{
+            for (int i=0;i<_TAM;i++){
+                if(e.getSource() == botoes[i]){
+                    mat.traduz_para_matrix(i);
+                }
+            }
+            update_tabuleiro();
+            mat.ver_matrix();
+        }
     }
 }

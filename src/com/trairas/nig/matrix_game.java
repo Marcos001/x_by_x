@@ -16,6 +16,7 @@ public class matrix_game {
     pecas p = new pecas();
 
 
+
     //serve para numero par
     public void inicializar_matrix(){
         boolean _state = false;
@@ -247,7 +248,8 @@ public class matrix_game {
 
                 if (index == value){
 
-                    if(matrix[i][j] == _rainha || matrix[i][j] == _X){
+                    if(matrix[i][j] == p.peao_white){
+                        mov_peao(i,j);
                         return;
                     }
 
@@ -321,8 +323,12 @@ public class matrix_game {
 
     //actions of pices
 
-    private void mov_peao(){
-        //peao branco
+    public void mov_peao(int linha, int coluna){
+        //peao branco -> amenta linha
+        if(linha == 1){
+            matrix[linha+1][coluna] = p.casa_limpa_at;
+            matrix[linha+2][coluna] = p.casa_limpa_at;
+        }
     }
 
 }

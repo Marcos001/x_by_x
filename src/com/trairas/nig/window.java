@@ -103,32 +103,46 @@ public class window extends JFrame {
             }
         });
 
-       this.setSize(_t.getWidth(), _t.getHeight());
-       this.setVisible(true);
+
+
+        this.setSize(_t.getWidth(), _t.getHeight());
+        this.setVisible(true);
 
     }
 
-    private void _reiniciar(){
-        contentPane.remove(_t);
-        contentPane.setBackground(new Color(55,55,55));
-        _t = null;
-        _t = new tabuleiro(DIMENSION);
-        contentPane.add(_t);
-        contentPane.updateUI();
-    }
-
-    private void play_game_network(){
+    private void remove_painel_anterior(){
         if(_t != null){
             contentPane.remove(_t);
         }
         if (_tg != null){
             contentPane.remove(_tg);
         }
+    }
+
+    private void _reiniciar(){
+
+        remove_painel_anterior();
+
+        contentPane.setBackground(new Color(55,55,55));
+        _t = null;
+        _t = new tabuleiro(DIMENSION);
+        contentPane.add(_t);
+        contentPane.updateUI();
+        contentPane.setSize(_t.getWidth(), _t.getHeight());
+        this.setSize(contentPane.getWidth(), contentPane.getHeight());
+    }
+
+    private void play_game_network(){
+
+        remove_painel_anterior();
+
         contentPane.setBackground(new Color(55,55,55));
         _tg = null;
         _tg = new tabu_game(DEFAULT_DIMENSION);
         contentPane.add(_tg);
         contentPane.updateUI();
+        contentPane.setSize(_tg.getWidth(), _tg.getHeight());
+        this.setSize(contentPane.getWidth(), contentPane.getHeight());
 
     }
 
