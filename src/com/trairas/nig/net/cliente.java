@@ -1,5 +1,7 @@
 package com.trairas.nig.net;
 
+import com.trairas.nig.mv_util;
+
 import javax.swing.*;
 import java.io.EOFException;
 import java.io.IOException;
@@ -7,11 +9,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.Arrays;
 
 /**
  * Created by nig on 23/09/17.
  */
-public class cliente extends Thread implements Runnable {
+public class cliente extends Thread {
 
 
     private ObjectOutputStream output; //gera o fluxo de saida para o servidor
@@ -20,10 +24,32 @@ public class cliente extends Thread implements Runnable {
     private String chatServer; //servidor de host para esse aplicativo
     private Socket client; //socket para comunicação
 
-    public cliente(String host){
-        this.chatServer = host;
+
+    private JScrollPane scrollPane;
+    private JTextArea tx_area;
+    private JPanel painel;
+
+    public JPanel getPainel(){
+        return painel;
     }
 
+
+    public cliente(String host){
+        this.chatServer = host;
+
+
+        tx_area =  new JTextArea();
+        tx_area.setEditable(false);
+        scrollPane = new JScrollPane(tx_area);
+        scrollPane.setBounds(0,0,200,200);
+
+        painel = new JPanel();
+        painel.setLayout(null);
+        painel.add(scrollPane);
+        painel.setBounds(30,200,250,200);
+
+
+    }
 
     public void run(){
 
@@ -46,6 +72,7 @@ public class cliente extends Thread implements Runnable {
     //processa a conexão com o cliente
     private void  ProcessConection() throws IOException{
 
+
         //processa as menssagens enviadas pelo cliente
         do{
 
@@ -58,7 +85,6 @@ public class cliente extends Thread implements Runnable {
 
         }while(!message.equals("CLIENT>>> TERMINATE"));
     }
-
 
 
     //ontém fluxos para enviar e receber dados
@@ -77,7 +103,8 @@ public class cliente extends Thread implements Runnable {
 
         displayMessage("Attemping connection\n");
         //cria um socket para fazer a connexão
-        client = new Socket(InetAddress.getByName(chatServer),12345);
+        //client = new Socket(InetAddress.getByName(chatServer),12345);
+        client = new Socket(chatServer,12345);
 
         //exibe informções sobre a connexão
         displayMessage("Connected to "+client.getInetAddress().getHostName());
@@ -88,12 +115,13 @@ public class cliente extends Thread implements Runnable {
     private void sendData(String message){
 
         try{
-            output.writeObject(message);
+            output.writeObject("CLIENTE>> " +message);
             output.flush();//esvazia a saida para o cliente
-            displayMessage("\nCLIENTE>>"+message);
+            displayMessage("\nCLIENTE>> "+message);
         }catch(IOException io){
-            System.out.println("\nError writing objetc");
+            displayMessage("\nError writing objetc");
         }
+
     }
 
     //fecha os fluxos e os sockets
@@ -105,7 +133,9 @@ public class cliente extends Thread implements Runnable {
             output.close();
             input.close();
             client.close();
-        }catch(IOException io){}
+        }catch(IOException io){
+            System.out.println("erro -> "+io);
+        }
 
     }
 
@@ -113,12 +143,12 @@ public class cliente extends Thread implements Runnable {
 
     //manipula a displayArea na  thread de despacho de eventos
     private void displayMessage(final String messageToDisplay){
-        SwingUtilities.invokeLater(new Runnable(){
-            public void run(){
-                System.out.println(messageToDisplay);
-            }
-        });
+        System.out.println("LOG = > "+messageToDisplay);
+        tx_area.append(messageToDisplay);
     }
+
+
+
 
 
 }

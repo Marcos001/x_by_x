@@ -3,6 +3,8 @@ package com.trairas.nig.net;
 import com.sun.security.ntlm.Server;
 import com.trairas.nig.mv_util;
 
+import javax.swing.*;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -18,100 +20,128 @@ public class servidor extends Thread{
     private ObjectOutputStream output; //gera o fluxo de saida para o cliente
     private ObjectInputStream input; // gera o fluxo de entrada a apartir do cliente
     private mv_util u = new mv_util();
-    private Socket conexao;
-    private ServerSocket s = null;
+    private Socket connection;
+    private ServerSocket server = null;
+    int counter=0;
 
-    private void aguardando_conexao(){
-        try{
+    private JScrollPane scrollPane;
+    private JTextArea tx_area;
+    private JPanel painel;
 
-            s = new ServerSocket(12345);
-
-            u.print("criado socket servidor");
-
-            Socket conexao = s.accept();
-            u.print("socket aceito");
-            Thread t = new servidor(conexao);
-            t.start();
-            u.print("thread iniciada");
-
-        }catch(IOException e){
-            u.print("IOException "+e);
-        }
+    public JPanel getPainel(){
+        return painel;
     }
+
+
+
 
     public servidor(){
 
+        tx_area =  new JTextArea();
+        tx_area.setEditable(false);
+        scrollPane = new JScrollPane(tx_area);
+        scrollPane.setBounds(0,0,200,200);
+
+        painel = new JPanel();
+        painel.setLayout(null);
+        painel.add(scrollPane);
+        painel.setBounds(30,100,250,200);
     }
-
-    public servidor(Socket s){//recebe o valor do socket enviado na thread
-        this.conexao = s;
-    }
-
-    private void sendData(String message){
-
-        try{
-            output.writeObject(message);
-            output.flush();
-            u.print("\nSERVER>> "+message);
-        }catch(IOException io){
-            u.print("\nError writing objetc");}
-    }
-
 
 
     public void run(){
 
-        aguardando_conexao();
+        try{//config o servidor para receber conexões; processa as conexoes
+            server = new ServerSocket(12345,100); //cria ServerSpcket
 
-        try{
-
-            u.print("metodo run");
-
-            if (conexao == null){
-                System.out.println("conexao nula");
-            }
-            if (output == null){
-                System.out.println("output nula");
-            }
-
-            //configura o fluxo de saida de dados
-            output = new ObjectOutputStream(conexao.getOutputStream());
-
-            //configura o fluxo de entrada de dados
-            input = new ObjectInputStream(conexao.getInputStream());
 
             try{
-
-                String message = (String) input.readObject();//lê uma nova menssagem
-
-                u.print("o cliente enviou = "+message);
-
-                sendData("Menssagem recebida");
-
-            }catch (Exception erro){
-                u.print("erro ao obter fluxo de dado do cliente");
+                waitForConnection();
+                getStreams();
+                ProcessConection();
+            }catch(EOFException e){
+                displayMessage("\nServer Termined connection");
+            }
+            finally{
+                closeConection(); //fecha a conexao
+                ++counter;
             }
 
-
-        }catch(IOException e){
-            u.print("IOException "+e);
+        }
+        catch(IOException io){
+            io.printStackTrace();
         }
     }
 
+    //espera que a conexao chegue e então exibe informações sobre a conexão
+    private void waitForConnection()throws IOException{
 
-    public String server_getIP(){
+        displayMessage("Waiting for connection");
+        connection = server.accept(); //permite que o servidor aceite a conexão
+        displayMessage("Connection "+counter+" received from: "+connection.getInetAddress().getHostName());
+    }
 
-        String ip;
+    //ontém fluxos para enviar e receber dados
+    private void getStreams() throws IOException{
+        //configura o fluxo de saida de dados
+        output = new ObjectOutputStream(connection.getOutputStream());
+        //configura o fluxo de entrada de dados
+        input = new ObjectInputStream(connection.getInputStream());
+
+        displayMessage("\n I/O streams\n");
+    }
+
+    //processa a conexão com o cliente
+    private void  ProcessConection() throws IOException{
+        String message = "Connection sucessful!";
+        sendData(message);//envia uma menssagem de conexão bem sucedida
+
+        //ativa a enterField de modo que o usuário do servidor possa enviar menssagens
+
+        //processa as menssagens enviadas pelo cliente
+        do{
+
+            try{//lê e exibe a menssagem
+                message = (String) input.readObject();//lê uma nova menssagem
+                displayMessage("\n"+message);
+            }catch(ClassNotFoundException c){
+                displayMessage("\nUnknowm object type received");
+            }
+
+        }while(!message.equals("CLIENT>>> TERMINATE"));
+    }
+
+    //fecha os fluxos e os sockets
+    private void closeConection(){
+
+        displayMessage("\nTerminating connection\n");
 
         try{
-            u.print("Obtendo ip");
-            ip = s.getInetAddress().getHostName();
-        }catch (Exception erro){
-            u.print("Erro ao obter o ip > \n"+erro);
-            ip = "localhost";
-        }
+            output.close();
+            input.close();
+            connection.close();
+        }catch(IOException io){}
 
-        return ip;
     }
+
+    //envia menssagem ao cliente
+    private void sendData(String message){
+
+        try{
+            output.writeObject("SERVER>> " +message);
+            output.flush();//esvazia a saida para o cliente
+            displayMessage("\nSERVER>> "+message);
+        }catch(IOException io){displayMessage("\nError writing objetc");}
+
+    }
+
+    //manipula a displayArea na  thread de despacho de eventos
+    private void displayMessage(final String messageToDisplay){
+        System.out.println("LOG = > "+messageToDisplay);
+        tx_area.append(messageToDisplay);
+    }
+
+
+
 
 }

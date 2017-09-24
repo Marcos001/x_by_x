@@ -42,6 +42,7 @@ public class window extends JFrame {
        this.add(contentPane);
        this.setJMenuBar(_menu.getBarraMenu());
        this.setIconImage(util.get_img_Icon("asserts/data/icone/256.png"));
+       this.setLocationRelativeTo(null);
 
        _menu.getItemReiniciar().addActionListener(new ActionListener() {
            @Override

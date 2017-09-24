@@ -18,10 +18,9 @@ public class tabu_game extends JPanel implements ActionListener{
     private int _size;
     mv_util u;
     pecas p;
-    private int comeco = 0;
 
     public matrix_game mat;
-    servidor ser;
+    private servidor ser;
     private cliente cli;
 
 
@@ -39,7 +38,80 @@ public class tabu_game extends JPanel implements ActionListener{
 
     JPanel painel_log_server;
     JPanel painel_game;
-    JLabel info_connection;
+
+    private JPanel panel_servidor(){
+
+        ser = new servidor();
+        ser.start();
+
+        JLabel title = new JLabel("Game Servidor");
+        title.setBounds(80,10,150,30);
+
+        JLabel lb_ip = new JLabel("Ip Servidor : ");//+ser.server_getIP()
+        lb_ip.setBounds(30,50,200,30);
+
+
+        JPanel painel = new JPanel();
+        painel.setLayout(null);
+        painel.add(title);
+        painel.add(lb_ip);
+        painel.add(ser.getPainel());
+        painel.setOpaque(true);
+        painel.setVisible(true);
+        painel.setBounds(0,0,300, _HEIGTH-10);
+
+
+
+        return painel;
+    }
+
+    private JPanel panel_cliente(){
+
+
+        JPanel painel = new JPanel();
+        painel.setLayout(null);
+        painel.setVisible(true);
+        painel.setOpaque(true);
+
+        JLabel title = new JLabel("Game Cliente");
+        title.setBounds(80,10,100,30);
+
+        JLabel lb_ip = new JLabel("Ip Servidor : ");
+        lb_ip.setBounds(30,50,100,30);
+
+        JTextField tf_ip = new JTextField(" Endereço  ");
+        tf_ip.setBounds(130,50,150,30);
+
+        JButton bt_ip = new JButton(" Conectar  ");
+        bt_ip.setBounds(150,90,120,30);
+        bt_ip.setBackground(u.azul);
+        bt_ip.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    cli = new cliente(tf_ip.getText());
+                    cli.start();
+                    painel.add(cli.getPainel());
+                    mat.set_pecas_xadrez();
+                }catch (Exception erro){
+                    u.print("Erro -> \n "+erro);
+                }
+            }
+        });
+
+
+        painel.add(title);
+        painel.add(lb_ip);
+        painel.add(tf_ip);
+        painel.add(bt_ip);
+
+        painel.setBounds(0,0,300, _HEIGTH-10);
+
+
+
+        return painel;
+    }
+
 
     public tabu_game(int rainhas, int conexao){
 
@@ -52,19 +124,38 @@ public class tabu_game extends JPanel implements ActionListener{
         p = new pecas();
 
 
+
+
         painel_game = new JPanel();
         painel_game.setLayout(new GridLayout(this._size, this._size));
         painel_game.setBackground(new Color(255,255,255));
         painel_game.setBounds(0,0,_WIDTH,_HEIGTH);
 
+        //iniciando parte logica da matrix
+        u.print("iniciando parte logica...");
+        if(mat == null){
+            mat = new matrix_game(_size);
+        }
+
+
+        //adicionando botoes
+        u.print("\nAdicionando os botoes...");
+        init_buttons(TAM);
+        add_buutons(TAM);
+
 
         painel_log_server = new JPanel();
-        //painel_log_server.setBackground(u.branca);
-        painel_log_server.setBounds(_WIDTH+10, 10, 300, 50);
+        painel_log_server.setBounds(_WIDTH+10, 10, 300, _HEIGTH-10);
         painel_log_server.setOpaque(true);
-        info_connection = new JLabel();
-        painel_log_server.add(info_connection);
+        painel_log_server.setLayout(null);
 
+
+        if (conexao == op_servidor){
+            painel_log_server.add(panel_servidor());
+
+        }else{
+            painel_log_server.add(panel_cliente());
+        }
 
 
 
@@ -81,35 +172,13 @@ public class tabu_game extends JPanel implements ActionListener{
 
 
 
-        //iniciando parte logica da matrix
-        u.print("iniciando parte logica...");
-        if(mat == null){
-            mat = new matrix_game(_size);
-        }
-
-
-        //adicionando botoes
-        u.print("\nAdicionando os botoes...");
-        init_buttons(TAM);
-        add_buutons(TAM);
-
-
-        if (conexao == op_servidor){
-            ser = new servidor();
-            info_connection.setText("Game Servidor ");
-            ser.start();
-        }else{
-            info_connection.setText("Game Cliente ");
-            cli = new cliente("10.0.0.108");
-            cli.start();
-        }
-
 
     }
 
     private void init_buttons(int rainhas){
         botoes = new JButton[rainhas];
     }
+
 
     private void add_buutons(int TAM){
 
@@ -221,11 +290,6 @@ public class tabu_game extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(comeco == 0){
-            mat.set_pecas_xadrez();
-            comeco = 1;
-        }
-        else{
             for (int i=0;i<_TAM;i++){
                 if(e.getSource() == botoes[i]){
                     mat.traduz_para_matrix(i);
@@ -233,6 +297,5 @@ public class tabu_game extends JPanel implements ActionListener{
             }
             update_tabuleiro();
             mat.ver_matrix();
-        }
     }
 }
