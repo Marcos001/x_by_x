@@ -19,6 +19,9 @@ public class window extends JFrame {
     private static final String _TITLE = "N-Rainhas";
     mv_util util;
 
+    final int servidor = 0;
+    final int cliente = 1;
+
 
 
     public window(){
@@ -138,7 +141,7 @@ public class window extends JFrame {
 
         contentPane.setBackground(new Color(55,55,55));
         _tg = null;
-        _tg = new tabu_game(DEFAULT_DIMENSION);
+        _tg = new tabu_game(DEFAULT_DIMENSION, servidor);
         contentPane.add(_tg);
         contentPane.updateUI();
         contentPane.setSize(_tg.getWidth(), _tg.getHeight());

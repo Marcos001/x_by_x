@@ -1,5 +1,7 @@
 package com.trairas.nig;
 
+import com.trairas.nig.net.servidor;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,24 +14,31 @@ public class tabu_game extends JPanel implements ActionListener{
 
     private JButton botoes[];
     private int _TAM;
-    public matrix_game mat;
     private int _size;
     mv_util u;
     pecas p;
     private int comeco = 0;
 
+    public matrix_game mat;
+    servidor ser = new servidor();
+
     private int vez_brancas = 1;
     private int vez_pretas = -1;
     private int jogada = vez_brancas;
 
+    final int op_servidor = 0;
+    final int op_cliente = 1;
 
     private static final int _WIDTH = 500;
     private static final int _HEIGTH = 500;
 
+    //graficos
+
     JPanel painel_log_server;
     JPanel painel_game;
+    JLabel info_connection;
 
-    public tabu_game(int rainhas){
+    public tabu_game(int rainhas, int conexao){
 
 
         int TAM = (rainhas*rainhas);
@@ -47,12 +56,17 @@ public class tabu_game extends JPanel implements ActionListener{
 
 
         painel_log_server = new JPanel();
-        painel_log_server.setBackground(u.branca);
-        painel_log_server.setBounds(_WIDTH+10, 10, 100, 50);
+        //painel_log_server.setBackground(u.branca);
+        painel_log_server.setBounds(_WIDTH+10, 10, 300, 50);
+        painel_log_server.setOpaque(true);
+        info_connection = new JLabel();
+        painel_log_server.add(info_connection);
+
+
 
 
         int size_painel_x = (_WIDTH+painel_log_server.getWidth()+20);
-        int size_painel_y = _HEIGTH;
+        int size_painel_y = _HEIGTH+50;
 
 
         this.add(painel_game);
@@ -71,13 +85,20 @@ public class tabu_game extends JPanel implements ActionListener{
         }
 
 
-
         //adicionando botoes
         u.print("\nAdicionando os botoes...");
         init_buttons(TAM);
         add_buutons(TAM);
 
 
+        if (conexao == op_servidor){
+            ser = new servidor();
+            info_connection.setText("Game Servidor ");
+        }else{
+            info_connection.setText("Game Cliente ");
+        }
+
+        ser.start();
     }
 
     private void init_buttons(int rainhas){
@@ -108,7 +129,7 @@ public class tabu_game extends JPanel implements ActionListener{
         }
     }
 
-    // vai ser depracaciada
+
     public void update_tabuleiro(){
 
         int tam_x = 40;

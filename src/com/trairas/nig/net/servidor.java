@@ -21,25 +21,27 @@ public class servidor extends Thread{
     private Socket conexao;
     private ServerSocket s = null;
 
-
-    public servidor(){
-
+    private void aguardando_conexao(){
         try{
 
             s = new ServerSocket(12345);
 
             u.print("criado socket servidor");
 
-            while(true){
-                Socket conexao = s.accept();
-                u.print("socket aceito");
-                Thread t = new servidor(conexao);
-                t.start();
-                u.print("thread iniciada");
-            }
+            Socket conexao = s.accept();
+            u.print("socket aceito");
+            Thread t = new servidor(conexao);
+            t.start();
+            u.print("thread iniciada");
+
         }catch(IOException e){
             u.print("IOException "+e);
         }
+    }
+
+    public servidor(){
+
+
     }
 
     public servidor(Socket s){//recebe o valor do socket enviado na thread
@@ -59,6 +61,8 @@ public class servidor extends Thread{
 
 
     public void run(){
+
+        aguardando_conexao();
 
         try{
 
