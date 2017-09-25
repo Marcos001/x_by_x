@@ -1,5 +1,7 @@
 package com.trairas.nig;
 
+import sun.security.krb5.internal.PAData;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -92,11 +94,24 @@ public class tabu_game extends JPanel {
             }
         });
 
+        JButton bt_start = new JButton(" Start  ");
+        bt_start.setBounds(150,120,120,30);
+        bt_start.setBackground(u.azul);
+        bt_start.setForeground(u.branca);
+        bt_start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cli.sendComando("start");
+            }
+        });
+
+
 
         painel.add(title);
         painel.add(lb_ip);
         painel.add(tf_ip);
         painel.add(bt_ip);
+        painel.add(bt_start);
 
         painel.setBounds(0,0,300, _HEIGTH-10);
 
@@ -130,8 +145,6 @@ public class tabu_game extends JPanel {
             painel_game.setBounds(0,0,_WIDTH,_HEIGTH);
             painel_game.setBackground(u.azul);
         }
-
-
 
 
         int size_painel_x = (_WIDTH+painel_log_server.getWidth()+20);

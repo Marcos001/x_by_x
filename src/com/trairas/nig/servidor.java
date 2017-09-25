@@ -53,6 +53,12 @@ public class servidor extends Thread{
         painel_game = new painel_tabu();
     }
 
+    private void setar_pecas(){
+        painel_game.mat.set_pecas_xadrez();
+        painel_game.update_tabuleiro();
+        painel_game.updateUI();
+        u.print("Pecas setadas");
+    }
 
     public void run(){
 
@@ -108,6 +114,10 @@ public class servidor extends Thread{
 
             try{//lê e exibe a menssagem
                 message = (String) input.readObject();//lê uma nova menssagem
+                if(message.equals("start")){
+                    setar_pecas();
+                }
+
                 displayMessage("\n"+message);
             }catch(ClassNotFoundException c){
                 displayMessage("\nUnknowm object type received");
@@ -126,6 +136,17 @@ public class servidor extends Thread{
             input.close();
             connection.close();
         }catch(IOException io){}
+
+    }
+
+    //envia menssagem ao cliente
+    private void sendComando(String message){
+
+        try{
+            output.writeObject(message);
+            output.flush();//esvazia a saida para o cliente
+            displayMessage("\nSERVER>> "+message);
+        }catch(IOException io){displayMessage("\nError writing objetc");}
 
     }
 

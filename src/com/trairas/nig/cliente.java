@@ -76,6 +76,7 @@ public class cliente extends Thread {
         }
     }
 
+
     //processa a conexão com o cliente
     private void  ProcessConection() throws IOException{
 
@@ -119,7 +120,18 @@ public class cliente extends Thread {
     }
 
 
-    private void sendData(String message){
+    //envia menssagem ao cliente
+    public void sendComando(String message){
+
+        try{
+            output.writeObject(message);
+            output.flush();//esvazia a saida para o cliente
+            displayMessage("\nSERVER>> "+message);
+        }catch(IOException io){displayMessage("\nError writing objetc");}
+
+    }
+
+    public void sendData(String message){
 
         try{
             output.writeObject("CLIENTE>> " +message);
