@@ -32,6 +32,7 @@ public class tabu_game extends JPanel {
     //graficos
     JPanel painel_log_server;
     JPanel painel_game;
+    JButton bt_start;
 
 
     private JPanel panel_servidor(){
@@ -77,6 +78,19 @@ public class tabu_game extends JPanel {
         JTextField tf_ip = new JTextField("10.0.0.108");
         tf_ip.setBounds(130,50,150,30);
 
+        bt_start = new JButton(" Start  ");
+        bt_start.setEnabled(false);
+        bt_start.setBounds(150,120,120,30);
+        bt_start.setBackground(u.azul);
+        bt_start.setForeground(u.branca);
+        bt_start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cli.sendComando("start");
+                cli.setar_pecas();
+            }
+        });
+
         JButton bt_ip = new JButton(" Conectar  ");
         bt_ip.setBounds(150,90,120,30);
         bt_ip.setBackground(u.azul);
@@ -88,22 +102,14 @@ public class tabu_game extends JPanel {
                     cli.start();
                     painel.add(cli.getPainel());
                     trocar_painel(cli.getPainelGame());
+                    bt_start.setEnabled(true);
                 }catch (Exception erro){
                     u.print("Erro -> \n "+erro);
                 }
             }
         });
 
-        JButton bt_start = new JButton(" Start  ");
-        bt_start.setBounds(150,120,120,30);
-        bt_start.setBackground(u.azul);
-        bt_start.setForeground(u.branca);
-        bt_start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cli.sendComando("start");
-            }
-        });
+
 
 
 

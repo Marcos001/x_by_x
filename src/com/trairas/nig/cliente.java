@@ -106,6 +106,12 @@ public class cliente extends Thread {
         displayMessage("\n I/O streams\n");
     }
 
+    public void setar_pecas(){
+        painel_game.mat.set_pecas_xadrez();
+        painel_game.update_tabuleiro();
+        painel_game.updateUI();
+        System.out.println("Pecas setadas");
+    }
 
     private void connectToServer()throws IOException{
 
