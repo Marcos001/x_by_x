@@ -1,8 +1,5 @@
 package com.trairas.nig;
 
-import com.trairas.nig.net.cliente;
-import com.trairas.nig.net.servidor;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,15 +8,11 @@ import java.awt.event.ActionListener;
 /**
  * Created by nig on 23/09/17.
  */
-public class tabu_game extends JPanel implements ActionListener{
+public class tabu_game extends JPanel {
 
-    private JButton botoes[];
-    private int _TAM;
-    private int _size;
     mv_util u;
     pecas p;
 
-    public matrix_game mat;
     private servidor ser;
     private cliente cli;
 
@@ -29,20 +22,21 @@ public class tabu_game extends JPanel implements ActionListener{
     private int jogada = vez_brancas;
 
     final int op_servidor = 0;
-    final int op_cliente = 1;
+
 
     private static final int _WIDTH = 500;
     private static final int _HEIGTH = 500;
 
     //graficos
-
     JPanel painel_log_server;
     JPanel painel_game;
+
 
     private JPanel panel_servidor(){
 
         ser = new servidor();
         ser.start();
+
 
         JLabel title = new JLabel("Game Servidor");
         title.setBounds(80,10,150,30);
@@ -59,7 +53,6 @@ public class tabu_game extends JPanel implements ActionListener{
         painel.setOpaque(true);
         painel.setVisible(true);
         painel.setBounds(0,0,300, _HEIGTH-10);
-
 
 
         return painel;
@@ -79,7 +72,7 @@ public class tabu_game extends JPanel implements ActionListener{
         JLabel lb_ip = new JLabel("Ip Servidor : ");
         lb_ip.setBounds(30,50,100,30);
 
-        JTextField tf_ip = new JTextField(" Endereço  ");
+        JTextField tf_ip = new JTextField("10.0.0.108");
         tf_ip.setBounds(130,50,150,30);
 
         JButton bt_ip = new JButton(" Conectar  ");
@@ -92,7 +85,7 @@ public class tabu_game extends JPanel implements ActionListener{
                     cli = new cliente(tf_ip.getText());
                     cli.start();
                     painel.add(cli.getPainel());
-                    mat.set_pecas_xadrez();
+                    trocar_painel(cli.getPainelGame());
                 }catch (Exception erro){
                     u.print("Erro -> \n "+erro);
                 }
@@ -107,41 +100,19 @@ public class tabu_game extends JPanel implements ActionListener{
 
         painel.setBounds(0,0,300, _HEIGTH-10);
 
-
-
         return painel;
     }
 
+    private void trocar_painel(JPanel painel){
+        this.remove(painel_game);
+        this.add(painel);
+        this.updateUI();
+    }
 
-    public tabu_game(int rainhas, int conexao){
-
-
-        int TAM = (rainhas*rainhas);
-        this._size = rainhas;
-        this._TAM = TAM;
+    public tabu_game(int conexao){
 
         u = new mv_util();
         p = new pecas();
-
-
-
-
-        painel_game = new JPanel();
-        painel_game.setLayout(new GridLayout(this._size, this._size));
-        painel_game.setBackground(new Color(255,255,255));
-        painel_game.setBounds(0,0,_WIDTH,_HEIGTH);
-
-        //iniciando parte logica da matrix
-        u.print("iniciando parte logica...");
-        if(mat == null){
-            mat = new matrix_game(_size);
-        }
-
-
-        //adicionando botoes
-        u.print("\nAdicionando os botoes...");
-        init_buttons(TAM);
-        add_buutons(TAM);
 
 
         painel_log_server = new JPanel();
@@ -152,10 +123,14 @@ public class tabu_game extends JPanel implements ActionListener{
 
         if (conexao == op_servidor){
             painel_log_server.add(panel_servidor());
-
+            painel_game = ser.getPainelGame();
         }else{
             painel_log_server.add(panel_cliente());
+            painel_game = new JPanel();
+            painel_game.setBounds(0,0,_WIDTH,_HEIGTH);
+            painel_game.setBackground(u.azul);
         }
+
 
 
 
@@ -170,132 +145,7 @@ public class tabu_game extends JPanel implements ActionListener{
         this.setVisible(true);
         this.setSize(size_painel_x,size_painel_y);
 
-
-
-
-    }
-
-    private void init_buttons(int rainhas){
-        botoes = new JButton[rainhas];
     }
 
 
-    private void add_buutons(int TAM){
-
-        for(int i=0;i< TAM; i++){
-            botoes[i] = new JButton();
-            botoes[i].setSize(20,20);
-            botoes[i].addActionListener(this);
-            painel_game.add(botoes[i]);
-        }
-
-        int value = 0;
-
-        for (int i=0;i<_size;i++){
-            for (int j=0;j<_size;j++) {
-
-                if (mat.matrix[i][j] == p.casa_preta) {
-                    botoes[value].setBackground(u.preta);
-                } else if (mat.matrix[i][j] == p.casa_branca) {
-                    botoes[value].setBackground(u.branca);
-                }
-                value += 1;
-            }
-        }
-    }
-
-
-    public void update_tabuleiro(){
-
-        int tam_x = 40;
-        int tam_y = 40;
-        int value = 0;
-
-        for (int i=0;i<_size;i++){
-            for (int j=0;j<_size;j++){
-
-                if(mat.matrix[i][j] == p.casa_preta){
-                    botoes[value].setBackground(u.preta);
-                }
-                else if(mat.matrix[i][j] == p.casa_branca){
-                    botoes[value].setBackground(u.branca);
-                }
-
-                 if(mat.matrix[i][j] == p.peao_white){
-                    botoes[value].setIcon(u.tratar_icone(p.ic_peao_white, tam_x, tam_y));
-                }
-
-                else if(mat.matrix[i][j] == p.peao_black){
-                    botoes[value].setIcon(u.tratar_icone(p.ic_peao_black, tam_x, tam_y));
-                }
-
-                //torres
-                 else if(mat.matrix[i][j] == p.torre_white){
-                     botoes[value].setIcon(u.tratar_icone(p.ic_torre_white, tam_x, tam_y));
-                 }
-
-                 else if(mat.matrix[i][j] == p.torre_black){
-                     botoes[value].setIcon(u.tratar_icone(p.ic_torre_black, tam_x, tam_y));
-                 }
-
-                 //cavalos
-                 else if(mat.matrix[i][j] == p.cavalo_white){
-                     botoes[value].setIcon(u.tratar_icone(p.ic_cavalo_white, tam_x, tam_y));
-                 }
-
-                 else if(mat.matrix[i][j] == p.cavalo_black){
-                     botoes[value].setIcon(u.tratar_icone(p.ic_cavalo_black, tam_x, tam_y));
-                 }
-
-                 //bispos
-                 else if(mat.matrix[i][j] == p.bispo_white){
-                     botoes[value].setIcon(u.tratar_icone(p.ic_bispo_white, tam_x, tam_y));
-                 }
-
-                 else if(mat.matrix[i][j] == p.bispo_black){
-                     botoes[value].setIcon(u.tratar_icone(p.ic_bispo_black, tam_x, tam_y));
-                 }
-
-                 //rainhas
-                 else if(mat.matrix[i][j] == p.rainha_white){
-                     botoes[value].setIcon(u.tratar_icone(p.ic_rainha_white, tam_x, tam_y));
-                 }
-
-                 else if(mat.matrix[i][j] == p.rainha_black){
-                     botoes[value].setIcon(u.tratar_icone(p.ic_rainha_black, tam_x, tam_y));
-                 }
-
-                 //rei
-                 else if(mat.matrix[i][j] == p.rei_white){
-                     botoes[value].setIcon(u.tratar_icone(p.ic_rei_white, tam_x, tam_y));
-                 }
-
-                 else if(mat.matrix[i][j] == p.rei_black){
-                     botoes[value].setIcon(u.tratar_icone(p.ic_rei_black, tam_x, tam_y));
-                 }
-
-                 //casas e pecas sobre ataque
-
-                 //casa limpa
-                 else if(mat.matrix[i][j] == p.casa_limpa_at){
-                     botoes[value].setIcon(u.tratar_icone(p.ic_casa_at, tam_x, tam_y));
-                 }
-                value += 1;
-            }
-        }
-    }
-
-
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-            for (int i=0;i<_TAM;i++){
-                if(e.getSource() == botoes[i]){
-                    mat.traduz_para_matrix(i);
-                }
-            }
-            update_tabuleiro();
-            mat.ver_matrix();
-    }
 }

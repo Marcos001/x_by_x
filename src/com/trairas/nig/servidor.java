@@ -1,4 +1,4 @@
-package com.trairas.nig.net;
+package com.trairas.nig;
 
 import com.sun.security.ntlm.Server;
 import com.trairas.nig.mv_util;
@@ -24,16 +24,19 @@ public class servidor extends Thread{
     private ServerSocket server = null;
     int counter=0;
 
+
     private JScrollPane scrollPane;
     private JTextArea tx_area;
     private JPanel painel;
+    private painel_tabu painel_game;
 
     public JPanel getPainel(){
         return painel;
     }
 
-
-
+    public JPanel getPainelGame(){
+        return painel_game;
+    }
 
     public servidor(){
 
@@ -46,6 +49,8 @@ public class servidor extends Thread{
         painel.setLayout(null);
         painel.add(scrollPane);
         painel.setBounds(30,100,250,200);
+
+        painel_game = new painel_tabu();
     }
 
 

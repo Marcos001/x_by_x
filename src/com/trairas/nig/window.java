@@ -144,7 +144,7 @@ public class window extends JFrame {
 
         contentPane.setBackground(new Color(55,55,55));
         _tg = null;
-        _tg = new tabu_game(DEFAULT_DIMENSION, conexao);
+        _tg = new tabu_game(conexao);
         contentPane.add(_tg);
         contentPane.updateUI();
         contentPane.setSize(_tg.getWidth(), _tg.getHeight());

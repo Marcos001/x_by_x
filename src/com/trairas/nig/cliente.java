@@ -1,4 +1,4 @@
-package com.trairas.nig.net;
+package com.trairas.nig;
 
 import com.trairas.nig.mv_util;
 
@@ -28,15 +28,22 @@ public class cliente extends Thread {
     private JScrollPane scrollPane;
     private JTextArea tx_area;
     private JPanel painel;
+    private painel_tabu painel_game;
 
     public JPanel getPainel(){
         return painel;
     }
 
+    public JPanel getPainelGame(){
+        return painel_game;
+    }
+
 
     public cliente(String host){
+
         this.chatServer = host;
 
+        painel_game = new painel_tabu();
 
         tx_area =  new JTextArea();
         tx_area.setEditable(false);
