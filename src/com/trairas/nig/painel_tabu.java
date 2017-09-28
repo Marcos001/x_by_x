@@ -43,7 +43,7 @@ public class painel_tabu extends JPanel implements ActionListener{
 
     }
     public void update_tabuleiro(){
-
+        System.out.println("Atualizando tabuleiro");
         int tam_x = 40;
         int tam_y = 40;
         int value = 0;
@@ -52,10 +52,16 @@ public class painel_tabu extends JPanel implements ActionListener{
             for (int j=0;j<_size;j++){
 
                 if(mat.matrix[i][j] == p.casa_preta){
+                    botoes[value].setIcon(null);
                     botoes[value].setBackground(u.preta);
+                    botoes[value].setBorderPainted( false );
+                    //botoes[value].setContentAreaFilled( false );
+                    //botoes[value].setFocusPainted( false );
                 }
                 else if(mat.matrix[i][j] == p.casa_branca){
+                    botoes[value].setIcon(null);
                     botoes[value].setBackground(u.branca);
+                    botoes[value].setBorderPainted( false );
                 }
 
                 if(mat.matrix[i][j] == p.peao_white){
@@ -113,7 +119,7 @@ public class painel_tabu extends JPanel implements ActionListener{
 
                 //casas e pecas sobre ataque
 
-                //casa limpa
+                //casa limpa - casa_limpa_at
                 else if(mat.matrix[i][j] == p.casa_limpa_at){
                     botoes[value].setIcon(u.tratar_icone(p.ic_casa_at, tam_x, tam_y));
                 }
@@ -129,11 +135,14 @@ public class painel_tabu extends JPanel implements ActionListener{
 
         for (int i=0;i<_TAM;i++){
             if(e.getSource() == botoes[i]){
-                mat.traduz_para_matrix(i);
+                //ve se a é a vez das brancas ou das pretas
+                    mat.traduz_para_matrix(i);
             }
         }
+
         update_tabuleiro();
         mat.ver_matrix();
+        this.updateUI();
     }
 
 

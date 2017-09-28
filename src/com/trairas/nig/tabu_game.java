@@ -109,10 +109,6 @@ public class tabu_game extends JPanel {
             }
         });
 
-
-
-
-
         painel.add(title);
         painel.add(lb_ip);
         painel.add(tf_ip);

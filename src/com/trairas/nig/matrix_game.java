@@ -15,7 +15,12 @@ public class matrix_game {
     private static final int _X = 4;
     pecas p = new pecas();
 
+    private dicionario _dc;
 
+
+    public dicionario get_dicionario(){
+        return _dc;
+    }
 
     //serve para numero par
     public void inicializar_matrix(){
@@ -271,6 +276,7 @@ public class matrix_game {
         this._size = size;
         inicializar_matrix();
         ver_matrix();
+        _dc = new dicionario();
     }
 
     private void setar_pecas_brancas(){
@@ -297,6 +303,7 @@ public class matrix_game {
         matrix[7][7] = p.torre_black;
     }
 
+    //seta os peoes pretos e brancos
     public void setar_peoes(){
         for (int j=0;j<_size;j++){
             //setando os peoes brancos
@@ -321,13 +328,63 @@ public class matrix_game {
 
     }
 
+    private int get_index(int linha, int coluna){
+        int value = 0;
+        for (int i=0;i<8;i++){
+            for (int j=0;j<8;j++){
+                if (linha == i && coluna == j)
+                    return value;
+                else
+                    value+=1;
+            }
+        }
+        return -1;
+    }
+
+    private int []get_index(int position){
+        int value = 0;
+        int []v = new int[2];
+        for (int i=0;i<8;i++){
+            for (int j=0;j<8;j++){
+                if (position == value){
+                    v[0] = i;
+                    v[1] = j;
+                }
+                else
+                    value+=1;
+            }
+        }
+        return v;
+    }
+
+    /**-------------------------------------------------------------------------------------*/
+
     //actions of pices
 
     public void mov_peao(int linha, int coluna){
         //peao branco -> amenta linha
+
+
         if(linha == 1){
-            matrix[linha+1][coluna] = p.casa_limpa_at;
-            matrix[linha+2][coluna] = p.casa_limpa_at;
+            if (_dc.is_value()){
+                _dc._add(linha+1, coluna, matrix[linha+1][coluna]);
+                _dc._add(linha+2, coluna, matrix[linha+2][coluna]);
+                matrix[linha+1][coluna] = p.casa_limpa_at;
+                matrix[linha+2][coluna] = p.casa_limpa_at;
+                print("Adicionando possibilidades");
+            }
+            else{
+                for (int i=0;i<_dc.dict.size();i++){
+                    int[] p = _dc.get_posicao_valor(i);
+                    matrix[p[0]][p[1]] = p[2];
+                    print("Voltando a um estado anterior das pecas");
+                }
+                _dc.clear();
+                _dc._add(linha+1, coluna, matrix[linha+1][coluna]);
+                _dc._add(linha+2, coluna, matrix[linha+2][coluna]);
+                matrix[linha+1][coluna] = p.casa_limpa_at;
+                matrix[linha+2][coluna] = p.casa_limpa_at;
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by nig on 01/09/17.
  */
+
 public class window extends JFrame {
 
     tabuleiro _t;
