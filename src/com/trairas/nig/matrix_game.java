@@ -10,9 +10,11 @@ import javax.swing.*;
 public class matrix_game {
 
     public int matrix[][];
+    private int matrix_src[][];
     private int _size;
     private static final int _rainha = 3;
     private static final int _X = 4;
+    private int []pv = new int[3];
     pecas p = new pecas();
 
     private dicionario _dc;
@@ -26,6 +28,7 @@ public class matrix_game {
     public void inicializar_matrix(){
         boolean _state = false;
         matrix = new int[_size][_size];
+        matrix_src = new int[_size][_size];
         for (int i=0;i<_size;i++){
 
             if (_state) {
@@ -35,11 +38,11 @@ public class matrix_game {
 
             for (int j=0;j<_size;j++){
                 if (_state){
-                    matrix[i][j] = 1;
+                    matrix[i][j] = 1;  matrix_src[i][j] = 1;
                     _state = false;
                 }
                 else{
-                    matrix[i][j] = 0;
+                    matrix[i][j] = 0; matrix_src[i][j] = 0;
                     _state = true;
                 }
             }
@@ -258,12 +261,15 @@ public class matrix_game {
                         return;
                     }
 
-                    if(matrix[i][j] == 0 || matrix[i][j] == 1 ){
-                        if(!verifica_posicoes(i,j)){
-                            matrix[i][j] = _rainha;
-                        }
+                    if(matrix[i][j] < 0){
+                        //ataque
+                        setar_movimento_ataque(i,j);
                         return;
                     }
+
+
+
+
                 }
                 else{
                     value +=1;
@@ -271,6 +277,7 @@ public class matrix_game {
             }
         }
     }
+
 
     public matrix_game(int size){
         this._size = size;
@@ -328,6 +335,9 @@ public class matrix_game {
 
     }
 
+
+    /** funcoes para escolha de posicao da linha e cooluna **/
+
     private int get_index(int linha, int coluna){
         int value = 0;
         for (int i=0;i<8;i++){
@@ -359,10 +369,42 @@ public class matrix_game {
 
     /**-------------------------------------------------------------------------------------*/
 
+    private void setar_pecas_vez(int i, int j, int v){
+        pv[0] = i;
+        pv[1] = j;
+        pv[2] = v;
+    }
+
     //actions of pices
+
+    private void setar_movimento_ataque(int i, int j){
+        matrix[i][j] = pv[2];
+        //remover do dicionario
+        _dc._remove(i,j, matrix[i][j]);
+        matrix[pv[0]][pv[1]] = matrix_src[pv[0]][pv[1]];
+        remove_marcacoes_ataque();
+    }
+
+    private void remove_marcacoes_ataque(){
+        for (int i=0;i<_dc.dict.size();i++){
+            int[] p = _dc.get_posicao_valor(i);
+            matrix[p[0]][p[1]] = p[2];
+            print("Voltando a um estado anterior das pecas");
+        }
+        _dc.clear();
+    }
 
     public void mov_peao(int linha, int coluna){
         //peao branco -> amenta linha
+
+
+        setar_pecas_vez(linha, coluna, matrix[linha][coluna]);
+
+        //primeira jogada
+
+        // demais jogadas
+
+        // so anda pra frente & come para os lados
 
 
         if(linha == 1){
@@ -374,17 +416,15 @@ public class matrix_game {
                 print("Adicionando possibilidades");
             }
             else{
-                for (int i=0;i<_dc.dict.size();i++){
-                    int[] p = _dc.get_posicao_valor(i);
-                    matrix[p[0]][p[1]] = p[2];
-                    print("Voltando a um estado anterior das pecas");
-                }
-                _dc.clear();
+                remove_marcacoes_ataque();
                 _dc._add(linha+1, coluna, matrix[linha+1][coluna]);
                 _dc._add(linha+2, coluna, matrix[linha+2][coluna]);
                 matrix[linha+1][coluna] = p.casa_limpa_at;
                 matrix[linha+2][coluna] = p.casa_limpa_at;
             }
+        }
+        else{
+
         }
     }
 

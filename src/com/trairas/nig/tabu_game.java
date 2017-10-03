@@ -75,7 +75,7 @@ public class tabu_game extends JPanel {
         JLabel lb_ip = new JLabel("Ip Servidor : ");
         lb_ip.setBounds(30,50,100,30);
 
-        JTextField tf_ip = new JTextField("10.0.0.108");
+        JTextField tf_ip = new JTextField("0.0.0.0");
         tf_ip.setBounds(130,50,150,30);
 
         bt_start = new JButton(" Start  ");
