@@ -31,9 +31,20 @@ public class dicionario {
         return true;
     }
 
-    public void _remove(int linha, int coluna, int valor){
-        String indice = linha+":"+coluna+":"+valor;
-        dict.remove(indice);
+    public boolean _remove(int linha, int coluna, int valor){
+
+            String indice = linha+":"+coluna+":"+valor;
+
+            for(int i=0;i<dict.size();i++){
+                String []tmp = dict.get(i).split(":");
+                System.out.println(i+" = "+dict.get(i));
+                if (Integer.parseInt(tmp[0]) == linha && Integer.parseInt(tmp[1]) == coluna){
+                    dict.remove(i);
+                    return true;
+                }
+            }
+
+        return false;
     }
 
     public boolean is_value(){

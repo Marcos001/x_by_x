@@ -257,11 +257,13 @@ public class matrix_game {
                 if (index == value){
 
                     if(matrix[i][j] == p.peao_white){
+                        print(">--------------------------Peão init-------------------------<");
                         mov_peao(i,j);
+                        print(">--------------------------Peão end -------------------------<");
                         return;
                     }
 
-                    if(matrix[i][j] < 0){
+                    else if(matrix[i][j] < 0){
                         //ataque
                         setar_movimento_ataque(i,j);
                         return;
@@ -369,18 +371,25 @@ public class matrix_game {
 
     /**-------------------------------------------------------------------------------------*/
 
-    private void setar_pecas_vez(int i, int j, int v){
+    private void setar_pecas_vez(int i, int j){
         pv[0] = i;
         pv[1] = j;
-        pv[2] = v;
+        pv[2] = matrix[i][j];
     }
 
     //actions of pices
 
     private void setar_movimento_ataque(int i, int j){
+
+        print("firt size dict : "+_dc.dict.size());
+
+        print(" Resultado da remoção :  "+_dc._remove(i,j, matrix[i][j]));
+
         matrix[i][j] = pv[2];
         //remover do dicionario
-        _dc._remove(i,j, matrix[i][j]);
+
+        print("last size dict : "+_dc.dict.size());
+
         matrix[pv[0]][pv[1]] = matrix_src[pv[0]][pv[1]];
         remove_marcacoes_ataque();
     }
@@ -388,6 +397,7 @@ public class matrix_game {
     private void remove_marcacoes_ataque(){
         for (int i=0;i<_dc.dict.size();i++){
             int[] p = _dc.get_posicao_valor(i);
+            print("Matrix["+p[0]+"]["+p[1]+"] = "+matrix[p[0]][p[1]]+" -> "+p[2]);
             matrix[p[0]][p[1]] = p[2];
             print("Voltando a um estado anterior das pecas");
         }
@@ -398,7 +408,7 @@ public class matrix_game {
         //peao branco -> amenta linha
 
 
-        setar_pecas_vez(linha, coluna, matrix[linha][coluna]);
+        setar_pecas_vez(linha, coluna);
 
         //primeira jogada
 

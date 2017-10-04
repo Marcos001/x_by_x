@@ -12,8 +12,6 @@ public class Main {
         d._add(3,-1);
         d.get_posicao_valor(1);
         * */
-
-
-
+        
     }
 }
