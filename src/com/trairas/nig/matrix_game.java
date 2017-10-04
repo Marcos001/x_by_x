@@ -381,14 +381,9 @@ public class matrix_game {
 
     private void setar_movimento_ataque(int i, int j){
 
-        print("firt size dict : "+_dc.dict.size());
-
-        print(" Resultado da remoção :  "+_dc._remove(i,j, matrix[i][j]));
+        print(" Resultado da remoção :  "+_dc._remove(i,j));
 
         matrix[i][j] = pv[2];
-        //remover do dicionario
-
-        print("last size dict : "+_dc.dict.size());
 
         matrix[pv[0]][pv[1]] = matrix_src[pv[0]][pv[1]];
         remove_marcacoes_ataque();

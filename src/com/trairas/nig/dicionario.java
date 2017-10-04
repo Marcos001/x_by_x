@@ -31,9 +31,7 @@ public class dicionario {
         return true;
     }
 
-    public boolean _remove(int linha, int coluna, int valor){
-
-            String indice = linha+":"+coluna+":"+valor;
+    public boolean _remove(int linha, int coluna){
 
             for(int i=0;i<dict.size();i++){
                 String []tmp = dict.get(i).split(":");
