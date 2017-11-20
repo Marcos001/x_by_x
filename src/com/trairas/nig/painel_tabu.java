@@ -56,8 +56,6 @@ public class painel_tabu extends JPanel implements ActionListener{
                     botoes[value].setIcon(null);
                     botoes[value].setBackground(u.preta);
                     botoes[value].setBorderPainted( false );
-                    //botoes[value].setContentAreaFilled( false );
-                    //botoes[value].setFocusPainted( false );
                 }
                 else if(mat.matrix[i][j] == p.casa_branca){
                     botoes[value].setIcon(null);
@@ -65,65 +63,50 @@ public class painel_tabu extends JPanel implements ActionListener{
                     botoes[value].setBorderPainted( false );
                 }
 
-                if(mat.matrix[i][j] == p.peao_white){
+                if(mat.matrix[i][j] == p.peao_white)
                     botoes[value].setIcon(u.tratar_icone(p.ic_peao_white, tam_x, tam_y));
-                }
 
-                else if(mat.matrix[i][j] == p.peao_black){
+                else if(mat.matrix[i][j] == p.peao_black)
                     botoes[value].setIcon(u.tratar_icone(p.ic_peao_black, tam_x, tam_y));
-                }
 
                 //torres
-                else if(mat.matrix[i][j] == p.torre_white){
+                else if(mat.matrix[i][j] == p.torre_white)
                     botoes[value].setIcon(u.tratar_icone(p.ic_torre_white, tam_x, tam_y));
-                }
 
-                else if(mat.matrix[i][j] == p.torre_black){
+                else if(mat.matrix[i][j] == p.torre_black)
                     botoes[value].setIcon(u.tratar_icone(p.ic_torre_black, tam_x, tam_y));
-                }
 
                 //cavalos
-                else if(mat.matrix[i][j] == p.cavalo_white){
+                else if(mat.matrix[i][j] == p.cavalo_white)
                     botoes[value].setIcon(u.tratar_icone(p.ic_cavalo_white, tam_x, tam_y));
-                }
 
-                else if(mat.matrix[i][j] == p.cavalo_black){
+                else if(mat.matrix[i][j] == p.cavalo_black)
                     botoes[value].setIcon(u.tratar_icone(p.ic_cavalo_black, tam_x, tam_y));
-                }
 
                 //bispos
-                else if(mat.matrix[i][j] == p.bispo_white){
+                else if(mat.matrix[i][j] == p.bispo_white)
                     botoes[value].setIcon(u.tratar_icone(p.ic_bispo_white, tam_x, tam_y));
-                }
 
-                else if(mat.matrix[i][j] == p.bispo_black){
+                else if(mat.matrix[i][j] == p.bispo_black)
                     botoes[value].setIcon(u.tratar_icone(p.ic_bispo_black, tam_x, tam_y));
-                }
 
                 //rainhas
-                else if(mat.matrix[i][j] == p.rainha_white){
+                else if(mat.matrix[i][j] == p.rainha_white)
                     botoes[value].setIcon(u.tratar_icone(p.ic_rainha_white, tam_x, tam_y));
-                }
 
-                else if(mat.matrix[i][j] == p.rainha_black){
+                else if(mat.matrix[i][j] == p.rainha_black)
                     botoes[value].setIcon(u.tratar_icone(p.ic_rainha_black, tam_x, tam_y));
-                }
 
                 //rei
-                else if(mat.matrix[i][j] == p.rei_white){
+                else if(mat.matrix[i][j] == p.rei_white)
                     botoes[value].setIcon(u.tratar_icone(p.ic_rei_white, tam_x, tam_y));
-                }
 
-                else if(mat.matrix[i][j] == p.rei_black){
+                else if(mat.matrix[i][j] == p.rei_black)
                     botoes[value].setIcon(u.tratar_icone(p.ic_rei_black, tam_x, tam_y));
-                }
 
-                //casas e pecas sobre ataque
-
-                //casa limpa - casa_limpa_at
-                else if(mat.matrix[i][j] == p.casa_limpa_at){
+                else if(mat.matrix[i][j] == p.casa_limpa_at)
                     botoes[value].setIcon(u.tratar_icone(p.ic_casa_at, tam_x, tam_y));
-                }
+
                 value += 1;
             }
         }
@@ -165,7 +148,6 @@ public class painel_tabu extends JPanel implements ActionListener{
 
         for (int i=0;i<_size;i++){
             for (int j=0;j<_size;j++) {
-
                 if (mat.matrix[i][j] == p.casa_preta) {
                     botoes[value].setBackground(u.preta);
                 } else if (mat.matrix[i][j] == p.casa_branca) {

@@ -418,7 +418,6 @@ public class matrix_game {
                 _dc._add(linha+2, coluna, matrix[linha+2][coluna]);
                 matrix[linha+1][coluna] = p.casa_limpa_at;
                 matrix[linha+2][coluna] = p.casa_limpa_at;
-                print("Adicionando possibilidades");
             }
             else{
                 remove_marcacoes_ataque();
@@ -428,7 +427,16 @@ public class matrix_game {
                 matrix[linha+2][coluna] = p.casa_limpa_at;
             }
         }
+
         else{
+
+            if(matrix[linha+1][coluna] == 0 || matrix[linha+1][coluna] == 1){
+
+            }
+
+            //verificar se as casas as frentes se estao válidas
+
+            //verificar se estão atacando
 
         }
     }
