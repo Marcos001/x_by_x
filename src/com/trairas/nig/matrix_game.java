@@ -49,35 +49,34 @@ public class matrix_game {
         }
     }
 
-    public void ver_matrix(){
+    public void ver_matrix() {
         boolean end = false;
         int t_rainhas = 0;
         String resultado = "";
         print("---------------------");
-        for (int i=0;i<_size;i++){
+        for (int i = 0; i < _size; i++) {
             print("\n");
-            for (int j=0;j<_size;j++){
-                System.out.printf(" %d ",matrix[i][j]);
-                if(!end){
-                    if(matrix[i][j] == 0 || matrix[i][j] == 1){
+            for (int j = 0; j < _size; j++) {
+                System.out.printf(" %d ", matrix[i][j]);
+                if (!end) {
+                    if (matrix[i][j] == 0 || matrix[i][j] == 1) {
                         end = true;
                     }
                 }
-                if(matrix[i][j] == _rainha){
+                if (matrix[i][j] == _rainha) {
                     t_rainhas += 1;
                 }
 
             }
         }
 
-        if (!end){
-            if(t_rainhas == _size){
+        if (!end) {
+            if (t_rainhas == _size) {
                 resultado = "Satus : Vitoria! \n";
-            }
-            else{
+            } else {
                 resultado = "Satus : Verme Inútil - Falha \n";
             }
-            JOptionPane.showMessageDialog(null,"Tabuleiro Prenchido \n "+resultado+" Rainhas = "+t_rainhas);
+            JOptionPane.showMessageDialog(null, "Tabuleiro Prenchido \n " + resultado + " Rainhas = " + t_rainhas);
         }
     }
 

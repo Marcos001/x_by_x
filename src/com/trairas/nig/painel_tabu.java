@@ -119,6 +119,7 @@ public class painel_tabu extends JPanel implements ActionListener{
 
         for (int i=0;i<_TAM;i++){
             if(e.getSource() == botoes[i]){
+
                 //ve se a é a vez das brancas ou das pretas
                     mat.traduz_para_matrix(i);
             }
