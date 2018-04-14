@@ -36,8 +36,13 @@ public class menu {
         return search_server;
     }
 
+    public JMenuItem get_game_you() {
+        return xadrez_jogar_so;
+    }
+
     private JMenuItem init_server = null;
     private JMenuItem search_server = null;
+    private JMenuItem xadrez_jogar_so = null;
 
 
     //
@@ -48,7 +53,7 @@ public class menu {
             BarraMenu.add(getMnuArquivo());
             BarraMenu.add(get_menu_search_soluction());
             BarraMenu.add(getMnuConfig());
-            BarraMenu.add(getMnuGameNetwork());
+            BarraMenu.add(getMnuGameXadrez());
         }
         return BarraMenu;
     }
@@ -91,14 +96,15 @@ public class menu {
         return menu_conf;
     }
 
-    private JMenu getMnuGameNetwork() {
+    private JMenu getMnuGameXadrez() {
         if (game_network == null){
             game_network = new JMenu();
-            game_network.setText("Network");
+            game_network.setText(" Xadrez ");
             game_network.setFont(f);
             game_network.setForeground(new Color(255,255,255));
             game_network.add(get_init_server());
             game_network.add(get_search_server());
+            game_network.add(set_game_you());
         }
         return game_network;
     }
@@ -172,6 +178,20 @@ public class menu {
         }
         return menu_algoritmo;
     }
+
+
+    private JMenuItem set_game_you() {
+        if (xadrez_jogar_so == null){
+            xadrez_jogar_so = new JMenuItem();
+            xadrez_jogar_so.setBackground(new Color(55,55,55));
+            xadrez_jogar_so.setForeground(new Color(255,255,255));
+            xadrez_jogar_so.setText(" Você X Você ");
+            xadrez_jogar_so.setFont(f);
+        }
+        return xadrez_jogar_so;
+    }
+
+
 
     private JMenuItem get_init_server() {
         if (init_server == null){

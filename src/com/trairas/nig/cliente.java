@@ -30,9 +30,11 @@ public class cliente extends Thread {
     private JPanel painel;
     private painel_tabu painel_game;
 
+
     public JPanel getPainel(){
         return painel;
     }
+
 
     public JPanel getPainelGame(){
         return painel_game;

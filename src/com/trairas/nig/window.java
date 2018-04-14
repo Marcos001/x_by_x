@@ -19,12 +19,16 @@ public class window extends JFrame {
     private static final int DEFAULT_DIMENSION = 8;
     private static final String _TITLE = "N-Rainhas";
     mv_util util;
+    private boolean verbose = false;
 
     final int servidor = 0;
     final int cliente = 1;
+    final int jogar_so = 2;
 
 
-
+    /**
+     * Janela principal - GUI
+     * */
     public window(){
 
         _menu = new menu();
@@ -110,6 +114,16 @@ public class window extends JFrame {
         });
 
 
+        // função para jogar xadrez só
+        _menu.get_game_you().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                print("Jogar Xadrez só");
+                play_game_network(jogar_so);
+            }
+        });
+
+
 
         this.setSize(_t.getWidth(), _t.getHeight());
         this.setVisible(true);
@@ -151,6 +165,10 @@ public class window extends JFrame {
         contentPane.setSize(_tg.getWidth(), _tg.getHeight());
         this.setSize(contentPane.getWidth(), contentPane.getHeight());
 
+    }
+    private void print(String m){
+        if (verbose)
+            System.out.print(""+m);
     }
 
 }

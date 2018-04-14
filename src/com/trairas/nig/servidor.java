@@ -50,7 +50,7 @@ public class servidor extends Thread{
         painel.add(scrollPane);
         painel.setBounds(30,100,250,200);
 
-        painel_game = new painel_tabu();
+
     }
 
     private void setar_pecas(){

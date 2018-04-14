@@ -15,13 +15,13 @@ public class painel_tabu extends JPanel implements ActionListener{
     private int _size;
     mv_util u;
     pecas p;
-    matrix_game mat;
+    public matrix_game mat;
     matrix_game mat_src;
 
     private static final int _WIDTH = 500;
     private static final int _HEIGTH = 500;
 
-    painel_tabu(){
+    public painel_tabu(){
 
         int rainhas = 8;
         int TAM = (rainhas*rainhas);

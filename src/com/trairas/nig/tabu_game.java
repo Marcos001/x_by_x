@@ -24,6 +24,8 @@ public class tabu_game extends JPanel {
     private int jogada = vez_brancas;
 
     final int op_servidor = 0;
+    final int op_cliente = 1;
+    final int op_jogar_so = 2;
 
 
     private static final int _WIDTH = 500;
@@ -35,6 +37,7 @@ public class tabu_game extends JPanel {
     JButton bt_start;
 
 
+    // painel de log com os elementos de sonfiguracao do usuario
     private JPanel panel_servidor(){
 
         ser = new servidor();
@@ -61,6 +64,8 @@ public class tabu_game extends JPanel {
         return painel;
     }
 
+
+    // painel de log com os elementos de sonfiguracao do usuario
     private JPanel panel_cliente(){
 
 
@@ -120,6 +125,28 @@ public class tabu_game extends JPanel {
         return painel;
     }
 
+
+
+    private JPanel panel_log_game_so(JLabel label){
+
+        JPanel painel = new JPanel();
+        painel.setLayout(null);
+        painel.setVisible(true);
+        painel.setOpaque(true);
+
+
+        // adicionar os labels das jogadas
+        // adicionando a informação - adicionar depois um JScrollPane
+        if (label != null)
+            painel.add(label);
+
+
+        painel.setBounds(0,0,300, _HEIGTH-10);
+        return  painel;
+    }
+
+
+
     private void trocar_painel(JPanel painel){
         this.remove(painel_game);
         this.add(painel);
@@ -128,24 +155,37 @@ public class tabu_game extends JPanel {
 
     public tabu_game(int conexao){
 
+
         u = new mv_util();
         p = new pecas();
 
-
+        // painel de log
         painel_log_server = new JPanel();
         painel_log_server.setBounds(_WIDTH+10, 10, 300, _HEIGTH-10);
         painel_log_server.setOpaque(true);
         painel_log_server.setLayout(null);
 
 
-        if (conexao == op_servidor){
+        if (conexao == op_servidor) {
             painel_log_server.add(panel_servidor());
             painel_game = ser.getPainelGame();
-        }else{
+        }
+
+       else if (conexao == op_cliente) {
             painel_log_server.add(panel_cliente());
             painel_game = new JPanel();
-            painel_game.setBounds(0,0,_WIDTH,_HEIGTH);
+            painel_game.setBounds(0, 0, _WIDTH, _HEIGTH);
             painel_game.setBackground(u.azul);
+        }
+
+        else if(conexao == op_jogar_so){
+            //opcao de jogar sozinho
+            painel_log_server.add(panel_log_game_so(null));
+
+            painel_game = new GameXadrezSo().painel_game();
+            painel_game.setBounds(0, 0, _WIDTH, _HEIGTH);
+            painel_game.setBackground(u.azul);
+
         }
 
 
