@@ -17,6 +17,10 @@ public class matrix_game {
     private int []pv = new int[3];
     pecas p = new pecas();
 
+    private final static int vez_preta = 100;
+    private final static int vez_brancas = 200;
+    private int movimento = vez_brancas;
+
     private dicionario _dc;
 
 
@@ -253,23 +257,25 @@ public class matrix_game {
         for (int i=0;i<_size;i++){
             for (int j =0;j<_size;j++){
 
+                // encontrou o valor
                 if (index == value){
 
-                    if(matrix[i][j] == p.peao_white){
-                        print(">--------------------------Peão init-------------------------<");
-                        mov_peao(i,j);
-                        print(">--------------------------Peão end -------------------------<");
-                        return;
-                    }
+                    print("Movimento = "+movimento);
 
-                    else if(matrix[i][j] < 0){
-                        //ataque
-                        setar_movimento_ataque(i,j);
-                        return;
-                    }
+                    // verificar se a vez é das brancas ou das pretas
 
+                        if(matrix[i][j] == p.peao_white){
 
+                            mov_peao(i,j);
 
+                            return;
+                        }
+
+                        else if(matrix[i][j] < 0){
+                            //ataque
+                            setar_movimento_ataque(i,j);
+                            return;
+                        }
 
                 }
                 else{
@@ -398,7 +404,7 @@ public class matrix_game {
         _dc.clear();
     }
 
-    public void mov_peao(int linha, int coluna){
+    public boolean mov_peao(int linha, int coluna){
         //peao branco -> amenta linha
 
 
@@ -438,6 +444,8 @@ public class matrix_game {
             //verificar se estão atacando
 
         }
+        return true;
     }
+
 
 }
