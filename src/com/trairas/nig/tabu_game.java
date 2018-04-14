@@ -1,6 +1,7 @@
 package com.trairas.nig;
 
-import sun.security.krb5.internal.PAData;
+import com.trairas.nig.NET.cliente;
+import com.trairas.nig.NET.servidor;
 
 import javax.swing.*;
 import java.awt.*;

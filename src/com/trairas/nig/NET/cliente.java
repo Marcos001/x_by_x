@@ -1,6 +1,7 @@
-package com.trairas.nig;
+package com.trairas.nig.NET;
 
 import com.trairas.nig.mv_util;
+import com.trairas.nig.painel_tabu;
 
 import javax.swing.*;
 import java.io.EOFException;

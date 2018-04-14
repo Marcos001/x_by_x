@@ -389,7 +389,6 @@ public class matrix_game {
         print(" Resultado da remoção :  "+_dc._remove(i,j));
 
         matrix[i][j] = pv[2];
-
         matrix[pv[0]][pv[1]] = matrix_src[pv[0]][pv[1]];
         remove_marcacoes_ataque();
     }
@@ -436,7 +435,7 @@ public class matrix_game {
         else{
 
             if(matrix[linha+1][coluna] == 0 || matrix[linha+1][coluna] == 1){
-
+                JOptionPane.showMessageDialog(null,"Casa Valida");
             }
 
             //verificar se as casas as frentes se estao válidas
