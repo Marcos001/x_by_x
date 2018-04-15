@@ -1,6 +1,6 @@
 package com.trairas.nig;
 
-import jdk.nashorn.internal.scripts.JO;
+import com.trairas.nig.values.pecas;
 
 import javax.swing.*;
 
@@ -15,11 +15,8 @@ public class matrix_game {
     private static final int _rainha = 3;
     private static final int _X = 4;
     private int []pv = new int[3];
+    private boolean verbose = true;
     pecas p = new pecas();
-
-    private final static int vez_preta = 100;
-    private final static int vez_brancas = 200;
-    private int movimento = vez_brancas;
 
     private dicionario _dc;
 
@@ -252,35 +249,41 @@ public class matrix_game {
         return false;
     }
 
+
+
     public void traduz_para_matrix(int index){
+
         int value=0;
+
         for (int i=0;i<_size;i++){
             for (int j =0;j<_size;j++){
 
                 // encontrou o valor
                 if (index == value){
 
-                    print("Movimento = "+movimento);
+                    print("Index = "+index+" Value = "+value);
 
-                    // verificar se a vez é das brancas ou das pretas
+                    if (matrix[i][j] == p.peao_white) {
+                        mov_peao(i,j);
+                        return;
+                    }
 
-                        if(matrix[i][j] == p.peao_white){
+                    else if(matrix[i][j] == -1){
+                        setar_movimento_ataque(i,j);
+                        return;
+                    }
+                    else{
+                        print("Sem Movimentos do peão ");
+                    }
 
-                            mov_peao(i,j);
 
-                            return;
-                        }
 
-                        else if(matrix[i][j] < 0){
-                            //ataque
-                            setar_movimento_ataque(i,j);
-                            return;
-                        }
+
 
                 }
-                else{
-                    value +=1;
-                }
+
+                else{ value +=1; }
+
             }
         }
     }
@@ -305,6 +308,7 @@ public class matrix_game {
         matrix[0][7] = p.torre_white;
     }
 
+
     private void setar_pecas_pretas(){
         matrix[7][0] = p.torre_black;
         matrix[7][1] = p.cavalo_black;
@@ -316,6 +320,7 @@ public class matrix_game {
         matrix[7][6] = p.cavalo_black;
         matrix[7][7] = p.torre_black;
     }
+
 
     //seta os peoes pretos e brancos
     public void setar_peoes(){
@@ -329,7 +334,8 @@ public class matrix_game {
 
 
     void print(String m){
-        System.out.println(m);
+        if(verbose)
+            System.out.println(m);
     }
 
     public void set_pecas_xadrez(){
@@ -382,8 +388,8 @@ public class matrix_game {
         pv[2] = matrix[i][j];
     }
 
-    //actions of pices
 
+    //actions of pices - guarda os valores das casas anteriores edepois atribui na matrix
     private void setar_movimento_ataque(int i, int j){
 
         print(" Resultado da remoção :  "+_dc._remove(i,j));
@@ -391,6 +397,7 @@ public class matrix_game {
         matrix[i][j] = pv[2];
         matrix[pv[0]][pv[1]] = matrix_src[pv[0]][pv[1]];
         remove_marcacoes_ataque();
+
     }
 
     private void remove_marcacoes_ataque(){

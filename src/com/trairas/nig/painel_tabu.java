@@ -1,5 +1,7 @@
 package com.trairas.nig;
 
+import com.trairas.nig.values.pecas;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,19 +10,20 @@ import java.awt.event.ActionListener;
 /**
  * Created by nig on 24/09/17.
  */
+
 public class painel_tabu extends JPanel implements ActionListener{
 
     private JButton botoes[];
     private int _TAM;
     private int _size;
-    mv_util u;
-    pecas p;
+    private mv_util u;
+    private pecas p;
     public matrix_game mat;
-    matrix_game mat_src;
 
     private static final int _WIDTH = 500;
     private static final int _HEIGTH = 500;
 
+    //contrutor
     public painel_tabu(){
 
         int rainhas = 8;
@@ -43,6 +46,8 @@ public class painel_tabu extends JPanel implements ActionListener{
         this.setBounds(0,0,_WIDTH,_HEIGTH);
 
     }
+
+
     public void update_tabuleiro(){
         System.out.println("Atualizando tabuleiro");
         int tam_x = 40;

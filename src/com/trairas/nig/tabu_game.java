@@ -2,6 +2,7 @@ package com.trairas.nig;
 
 import com.trairas.nig.NET.cliente;
 import com.trairas.nig.NET.servidor;
+import com.trairas.nig.values.pecas;
 
 import javax.swing.*;
 import java.awt.*;

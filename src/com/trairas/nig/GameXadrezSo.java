@@ -1,7 +1,5 @@
 package com.trairas.nig;
 
-import com.trairas.nig.painel_tabu;
-
 import javax.swing.*;
 
 public class GameXadrezSo {
