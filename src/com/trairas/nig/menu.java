@@ -19,6 +19,9 @@ public class menu {
     private JMenu menu_conf = null;
     private JMenu game_network = null;
 
+    private JMenu menu_ajuda = null;
+    private JMenuItem menu_item_sobre = null;
+
     private JMenuItem menu_reiniciar = null;
     private JMenuItem qtd_casa = null;
     private JMenuItem mnuSair = null;
@@ -54,10 +57,23 @@ public class menu {
             BarraMenu.add(get_menu_search_soluction());
             BarraMenu.add(getMnuConfig());
             BarraMenu.add(getMnuGameXadrez());
+            BarraMenu.add(get_ajuda());
         }
         return BarraMenu;
     }
 
+
+    //
+    private JMenu get_ajuda() {
+        if (menu_ajuda == null){
+            menu_ajuda = new JMenu();
+            menu_ajuda.setText("Help");
+            menu_ajuda.setFont(f);
+            menu_ajuda.setForeground(new Color(255,255,255));
+            menu_ajuda.add(get_menu_item_sobre());
+        }
+        return menu_ajuda;
+    }
 
     //
     private JMenu get_menu_search_soluction() {
@@ -109,6 +125,23 @@ public class menu {
         return game_network;
     }
 
+
+    /** ------------- Item de MENU -  MENUITES -----------------*/
+
+
+    //
+    private JMenuItem get_menu_item_sobre() {
+        if (menu_item_sobre == null){
+            menu_item_sobre = new JMenuItem();
+            menu_item_sobre.setBackground(new Color(55,55,55));
+            menu_item_sobre.setForeground(new Color(255,255,255));
+            menu_item_sobre.setText("Sobre");
+            menu_item_sobre.setFont(f);
+        }
+        return menu_item_sobre;
+    }
+
+
     //
     private JMenuItem getMnuSair() {
         if (mnuSair == null){
@@ -120,6 +153,7 @@ public class menu {
         }
         return mnuSair;
     }
+
 
     private JMenuItem get_menu_reiniciar() {
         if (menu_reiniciar == null){
@@ -143,8 +177,6 @@ public class menu {
         return qtd_casa;
     }
 
-
-    //
     private JMenuItem get_tema_1() {
         if (tema_1 == null){
             tema_1 = new JMenuItem();
@@ -166,19 +198,17 @@ public class menu {
         }
         return tema_2;
     }
-
     //
     private JMenuItem get_menu_algoritmo() {
         if (menu_algoritmo == null){
             menu_algoritmo = new JMenuItem();
             menu_algoritmo.setBackground(new Color(55,55,55));
             menu_algoritmo.setForeground(new Color(255,255,255));
-            menu_algoritmo.setText("Jogar");
+            menu_algoritmo.setText("Backtracking");
             menu_algoritmo.setFont(f);
         }
         return menu_algoritmo;
     }
-
 
     private JMenuItem set_game_you() {
         if (xadrez_jogar_so == null){
@@ -190,8 +220,6 @@ public class menu {
         }
         return xadrez_jogar_so;
     }
-
-
 
     private JMenuItem get_init_server() {
         if (init_server == null){
@@ -216,7 +244,7 @@ public class menu {
     }
 
 
-    // gets()
+    /** menus para obter o method get()  */
 
     public JMenuItem getItemSair(){
         return mnuSair;
@@ -234,6 +262,10 @@ public class menu {
     }
     public JMenuItem getTema_2() {
         return tema_2;
+    }
+
+    public JMenuItem get_item_sobre(){
+        return menu_item_sobre;
     }
 
 }

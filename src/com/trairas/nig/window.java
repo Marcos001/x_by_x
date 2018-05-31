@@ -15,6 +15,7 @@ public class window extends JFrame {
 
     private tabuleiro _tabuleiro_N_rainhas;
     private tabu_game _tabuleiro_xadrez;
+    private about sobre;
     private JPanel contentPane;
     private menu _menu;
     private int DIMENSION = 8;
@@ -145,6 +146,25 @@ public class window extends JFrame {
             }
         });
 
+        _menu.get_item_sobre().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if(sobre == null){
+                    sobre = new about(contentPane.getWidth(), contentPane.getHeight());
+                    remove_painel_anterior();
+                    contentPane.updateUI();
+                    contentPane.add(sobre);
+                    contentPane.updateUI();
+                }
+
+                remove_painel_anterior();
+                contentPane.add(sobre);
+                contentPane.updateUI();
+
+            }
+        });
+
 
 
         this.setSize(_tabuleiro_N_rainhas.getWidth(), _tabuleiro_N_rainhas.getHeight());
@@ -159,6 +179,10 @@ public class window extends JFrame {
         if (_tabuleiro_xadrez != null){
             contentPane.remove(_tabuleiro_xadrez);
         }
+        if(sobre != null){
+            contentPane.remove(sobre);
+        }
+        contentPane.updateUI();
     }
 
     private void _reiniciar(){
